@@ -55,10 +55,10 @@ const Typesettings = {
     fontValue: 400,
     sources: {
       locals: [ 'Font Display Name', 'Font Postscript Name' ],
-      eot: 'font-path.eot',
-      woff: 'font-path.woff',
-      woff2: 'font-path.woff2',
-      ttf: 'font-path.ttf'
+      eot: require('./font-path.eot'),
+      woff: require('./font-path.woff'),
+      woff2: require('./font-path.woff2'),
+      ttf: require('./font-path.ttf')
     },
     normalcase: {
       10: {
