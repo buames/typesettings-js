@@ -52,7 +52,7 @@ const generate = (lettercasing, familyVariant, family, fallback) => {
       lineHeight: `${ lineHeight ? `${ lineHeight }px` : 'normal' }`,
       textTransform: `${ lettercasing === 'normalcase' ? 'none' : lettercasing }`,
       textRendering: 'optimizeLegibility',
-      webkitFontSmoothing: 'antialiased'
+      '-webkit-font-smoothing': 'antialiased'
     }
     return accum
   }, { })
