@@ -30,7 +30,7 @@ const getTransformLabel = (lettercasing) => {
   as it would not work with media queries properly.
 */
 const generate = (lettercasing, familyVariant, family, fallback) => {
-  const { fontStyle, fontValue } = familyVariant
+  const { fontStyle, fontWeight } = familyVariant
   const sizes = familyVariant[lettercasing]
 
   if (!sizes) {
@@ -39,14 +39,14 @@ const generate = (lettercasing, familyVariant, family, fallback) => {
 
   return Object.keys(sizes).reduce((accum, size) => {
     const { characterSpacing, lineHeight } = sizes[size]
-    const styleLabel = getStyleLabel(fontStyle, fontValue)
+    const styleLabel = getStyleLabel(fontStyle, fontWeight)
     const transformLabel = getTransformLabel(lettercasing)
 
     accum[`s${ size }`] = { } // font-size property is prefixed with 's'
     accum[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
       fontFamily: `'${ family }', ${ fallback }`,
       fontSize: `${ size }px`,
-      fontWeight: `${ fontValue }`,
+      fontWeight: `${ fontWeight }`,
       fontStyle: `${ fontStyle }`,
       letterSpacing: `${ characterSpacing ? `${ characterSpacing.toFixed(2) }px` : 'initial' }`,
       lineHeight: `${ lineHeight ? `${ lineHeight }px` : 'normal' }`,

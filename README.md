@@ -25,7 +25,7 @@ const Typesettings = {
   // all other keys are considered 'variants' of the typeface
   [variant]: {
     fontStyle: String,
-    fontValue: Number,
+    fontWeight: Number,
     sources: {
       locals: Array< String >,
       eot: String,
@@ -52,7 +52,7 @@ const Typesettings = {
   fallback: "-apple-system, BlinkMacSystemFont, 'Arial', sans-serif",
   regular: {
     fontStyle: 'normal',
-    fontValue: 400,
+    fontWeight: 400,
     sources: {
       locals: [ 'Font Display Name', 'Font Postscript Name' ],
       eot: require('./font-path.eot'),

@@ -35,7 +35,7 @@ const generateFontFace = (typesettings) => {
   const fontFace = Object.values(variants).map((variant) => {
     const face = [
       `font-family: ${ family }`,
-      `font-weight: ${ variant.fontValue }`,
+      `font-weight: ${ variant.fontWeight }`,
       `font-style: ${ variant.fontStyle }`
     ]
 
