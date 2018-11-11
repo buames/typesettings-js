@@ -52,7 +52,7 @@ const generate = (lettercasing, familyVariant, family, fallback) => {
       lineHeight: `${ lineHeight ? `${ lineHeight }px` : 'normal' }`,
       textTransform: `${ lettercasing === 'normalcase' ? 'none' : lettercasing }`,
       textRendering: 'optimizeLegibility',
-      '-webkit-font-smoothing': 'antialiased'
+      WebkitFontSmoothing: 'antialiased'
     }
     return accum
   }, { })
@@ -65,8 +65,8 @@ const generateFonts = (typesettings) => {
 
   const { family, fallback, ...variants } = typesettings
 
-  // Loop over the typeface variants (i.e. 'PostmatesStd-Regular')
-  // and create each variant's typesettings for each of their lettingcasing
+  // Loop over the typeface variants and create each variant's
+  // typesettings for each of their lettingcasing
   const settings = Object.values(variants).map((variant) => {
     const normal = generate('normalcase', variant, family, fallback)
     const upper = generate('uppercase', variant, family, fallback)
