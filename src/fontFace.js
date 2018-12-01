@@ -46,7 +46,7 @@ const generateFontFace = (typesettings) => {
       face.push(getSources(variant.sources))
     }
 
-    return `@fontFace { ${ face.join(';') } };`
+    return `@font-face { ${ face.join(';') } };`
   }).join('')
 
   return fontFace
