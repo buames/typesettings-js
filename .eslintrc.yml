@@ -2,11 +2,6 @@ extends:
   - airbnb-base
   - plugin:import/errors
 
-env:
-    node: true
-    browser: true
-    es6: true
-
 parser: babel-eslint
 
 rules:
@@ -26,12 +21,4 @@ rules:
   comma-dangle:
     - error
     - never
-  keyword-spacing:
-    - error
-    - before: true
-      after: true
-      overrides:
-        return: { after: true }
-        throw: { after: true }
-        case: { after: true }
   
