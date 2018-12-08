@@ -30,9 +30,11 @@ const generateFontFace = (typesettings) => {
     throw new Error('Your typesettings must be an object.')
   }
 
-  const fontFace = Object.values(typesettings).map((variant) => {
+  const { family, fallback, ...variants } = typesettings
+
+  const fontFace = Object.values(variants).map((variant) => {
     const face = [
-      `font-family: ${ variant.fontFamily }`,
+      `font-family: ${ family }`,
       `font-weight: ${ variant.fontWeight }`,
       `font-style: ${ variant.fontStyle }`
     ]

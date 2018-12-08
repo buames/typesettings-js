@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable object-curly-newline, no-param-reassign */
 const merge = require('deepmerge')
 
 /*
@@ -30,8 +30,9 @@ const getTransformLabel = (lettercasing) => {
   Generates a map of typesettings. We do not return emotionjs classes
   as it would not work with media queries properly.
 */
-const generate = (lettercasing, variant, styles) => {
-  const sizes = variant[lettercasing]
+const generate = (variant, options) => {
+  const { casing, styles, family, fallback } = options
+  const sizes = variant[casing]
 
   if (!sizes) {
     return { }
@@ -40,19 +41,17 @@ const generate = (lettercasing, variant, styles) => {
   return Object.keys(sizes).reduce((accum, size) => {
     const { characterSpacing, lineHeight } = sizes[size]
     const styleLabel = getStyleLabel(variant.fontStyle, variant.fontWeight)
-    const transformLabel = getTransformLabel(lettercasing)
+    const transformLabel = getTransformLabel(casing)
 
     accum[`s${ size }`] = { } // font-size property is prefixed with 's'
     accum[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
-      fontFamily: variant.fontFallback
-        ? `'${ variant.fontFamily }', ${ variant.fontFallback }`
-        : variant.fontFamily,
+      fontFamily: fallback ? `${ family }, ${ fallback }` : family,
       fontSize: `${ size }px`,
-      fontWeight: variant.fontWeight,
       fontStyle: variant.fontStyle,
+      fontWeight: variant.fontWeight,
       letterSpacing: `${ characterSpacing ? `${ characterSpacing.toFixed(2) }px` : 'initial' }`,
       lineHeight: `${ lineHeight ? `${ lineHeight }px` : 'normal' }`,
-      textTransform: `${ lettercasing === 'normalcase' ? 'none' : lettercasing }`,
+      textTransform: `${ casing === 'normalcase' ? 'none' : casing }`,
       ...styles || { }
     }
 
@@ -65,12 +64,15 @@ const generateFonts = (typesettings, styles) => {
     throw new Error('Your typesettings must be an object.')
   }
 
+  const { family, fallback, ...variants } = typesettings
+
   // Loop over the typeface variants and create each variant's
   // typesettings for each of their lettingcasing
-  const settings = Object.values(typesettings).map((variant) => {
-    const normal = generate('normalcase', variant, styles)
-    const upper = generate('uppercase', variant, styles)
-    const lower = generate('lowercase', variant, styles)
+  const settings = Object.values(variants).map((variant) => {
+    const shared = { styles, family, fallback }
+    const normal = generate(variant, { casing: 'normalcase', ...shared })
+    const upper = generate(variant, { casing: 'uppercase', ...shared })
+    const lower = generate(variant, { casing: 'lowercase', ...shared })
     return merge.all([ normal, upper, lower ])
   })
 

@@ -18,9 +18,9 @@ You can generate this (as json) automatically with sketch using the [typesetting
 
 ```js
 const Typesettings = {
+  family: String,
+  fallback: String,
   [variant]: {
-    fontFamily: String,
-    fontFallback: String,
     fontStyle: String,
     fontWeight: Number,
     sources: {
@@ -45,9 +45,9 @@ const Typesettings = {
 
 ```js
 const Typesettings = {
+  family: 'Helvetica Neue',
+  fallback: "-apple-system, BlinkMacSystemFont, 'Arial', sans-serif",
   regular: {
-    fontFamily: 'Helvetica Neue',
-    fontFallback: "-apple-system, BlinkMacSystemFont, 'Arial', sans-serif",
     fontStyle: 'normal',
     fontWeight: 400,
     sources: {
