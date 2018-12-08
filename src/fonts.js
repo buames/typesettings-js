@@ -1,14 +1,14 @@
-/* eslint-disable no-param-reassign, no-nested-ternary */
-import merge from 'deepmerge'
+/* eslint-disable no-param-reassign */
+const merge = require('deepmerge')
 
 /*
   Returns a weight property label‚ prefixed with 'n' for normal or 'i' for italics.
   For example, n700 equals 'normal' with a weight of '700'.
 */
-const getStyleLabel = (fontStyle, fontValue) => {
+const getStyleLabel = (fontStyle, fontWeight) => {
   switch (fontStyle) {
-    case 'normal': return `n${ fontValue }`
-    case 'italics': return `i${ fontValue }`
+    case 'normal': return `n${ fontWeight }`
+    case 'italics': return `i${ fontWeight }`
     default: return ''
   }
 }
@@ -20,6 +20,7 @@ const getStyleLabel = (fontStyle, fontValue) => {
 const getTransformLabel = (lettercasing) => {
   switch (lettercasing) {
     case 'uppercase': return '_caps'
+    case 'lowercase': return '_lower'
     case 'normalcase': return ''
     default: return ''
   }
@@ -29,9 +30,9 @@ const getTransformLabel = (lettercasing) => {
   Generates a map of typesettings. We do not return emotionjs classes
   as it would not work with media queries properly.
 */
-const generate = (lettercasing, familyVariant, family, fallback) => {
-  const { fontStyle, fontWeight } = familyVariant
-  const sizes = familyVariant[lettercasing]
+const generate = (lettercasing, variant, styles) => {
+  const { fontStyle, fontWeight } = variant
+  const sizes = variant[lettercasing]
 
   if (!sizes) {
     return { }
@@ -44,33 +45,34 @@ const generate = (lettercasing, familyVariant, family, fallback) => {
 
     accum[`s${ size }`] = { } // font-size property is prefixed with 's'
     accum[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
-      fontFamily: `'${ family }', ${ fallback }`,
+      fontFamily: variant.fontFallback
+        ? `'${ variant.fontFamily }', ${ variant.fontFallback }`
+        : variant.fontFamily,
       fontSize: `${ size }px`,
-      fontWeight: `${ fontWeight }`,
-      fontStyle: `${ fontStyle }`,
+      fontWeight,
+      fontStyle,
       letterSpacing: `${ characterSpacing ? `${ characterSpacing.toFixed(2) }px` : 'initial' }`,
       lineHeight: `${ lineHeight ? `${ lineHeight }px` : 'normal' }`,
       textTransform: `${ lettercasing === 'normalcase' ? 'none' : lettercasing }`,
-      textRendering: 'optimizeLegibility',
-      WebkitFontSmoothing: 'antialiased'
+      ...styles || { }
     }
+
     return accum
   }, { })
 }
 
-const generateFonts = (typesettings) => {
+const generateFonts = (typesettings, styles) => {
   if (typeof typesettings !== 'object') {
     throw new Error('Your typesettings must be an object.')
   }
 
-  const { family, fallback, ...variants } = typesettings
-
   // Loop over the typeface variants and create each variant's
   // typesettings for each of their lettingcasing
-  const settings = Object.values(variants).map((variant) => {
-    const normal = generate('normalcase', variant, family, fallback)
-    const upper = generate('uppercase', variant, family, fallback)
-    return merge(normal, upper)
+  const settings = Object.values(typesettings).map((variant) => {
+    const normal = generate('normalcase', variant, styles)
+    const upper = generate('uppercase', variant, styles)
+    const lower = generate('lowercase', variant, styles)
+    return merge.all([ normal, upper, lower ])
   })
 
   return merge.all(settings)
