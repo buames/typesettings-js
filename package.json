@@ -1,6 +1,6 @@
 {
   "name": "typesettings-js",
-  "version": "0.0.6-canary.0",
+  "version": "0.0.6-canary.1",
   "description": "A quest for consistency",
   "main": "dist/typesettings-js.cjs.js",
   "module": "dist/typesettings-js.esm.js",
