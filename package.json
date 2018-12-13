@@ -1,6 +1,6 @@
 {
   "name": "typesettings-js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A quest for consistency",
   "main": "dist/typesettings-js.cjs.js",
   "module": "dist/typesettings-js.esm.js",
