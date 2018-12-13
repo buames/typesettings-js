@@ -1,6 +1,6 @@
 {
   "name": "typesettings-js",
-  "version": "0.0.5",
+  "version": "0.0.6-canary.2",
   "description": "A quest for consistency",
   "main": "dist/typesettings-js.cjs.js",
   "module": "dist/typesettings-js.esm.js",
@@ -8,41 +8,36 @@
     "dist"
   ],
   "engines": {
-    "node": ">= 10.9.0"
+    "node": ">= 10.0.0"
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "test": "npm-run-all lint:check test:size",
-    "build": "npm-run-all clean rollup rollup:umd",
+    "build": "yarn clean && yarn rollup && yarn rollup:umd",
     "watch": "rollup -c rollup.config.js --watch",
+    "test": "yarn build && yarn lint && yarn size",
     "rollup": "rollup -c rollup.config.js",
     "rollup:umd": "UMD=true rollup -c rollup.config.js",
-    "lint:check": "eslint --ext .js src",
-    "test:size": "npm-run-all build size",
+    "lint": "eslint --ext .js src",
     "size": "bundlesize",
-    "precommit": "lint-staged",
     "prepare": "yarn run -s build"
   },
   "dependencies": {
-    "deepmerge": "^2.1.1"
+    "deepmerge": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-eslint": "8",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "babel-eslint": "10.0.1",
     "bundlesize": "^0.17.0",
-    "eslint": "^5.5.0",
+    "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.2",
-    "npm-run-all": "^4.1.3",
-    "rollup": "^0.65.0",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "rollup": "^0.67.4",
     "rollup-plugin-babel": "^4.0.2",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^5.0.2",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-uglify": "^6.0.0",
     "rollup-watch": "^4.3.1"
   },
   "lint-staged": {
@@ -51,6 +46,12 @@
       "git add"
     ]
   },
+  "husky": {
+    "hooks": {
+      "post-commit": "git update-index --again",
+      "pre-commit": "lint-staged"
+    }
+  },
   "bundlesize": [
     {
       "path": "dist/index.umd.min.js",
@@ -58,18 +59,15 @@
     },
     {
       "path": "dist/typesettings-js.cjs.js",
-      "maxSize": "2.5 kb"
+      "maxSize": "2 kb"
     },
     {
       "path": "dist/typesettings-js.esm.js",
-      "maxSize": "2.5 kb"
+      "maxSize": "2 kb"
     }
   ],
   "homepage": "https://github.com/buames/typesettings-js#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/buames/typesettings-js.git"
-  },
+  "repository": "https://github.com/buames/typesettings-js",
   "author": "buames",
   "publishConfig": {
     "access": "public"

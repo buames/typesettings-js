@@ -4,17 +4,15 @@ Typesettings
 [![npm](https://img.shields.io/npm/v/typesettings-js.svg?style=flat-square)](https://www.npmjs.com/package/typesettings-js)
 </h1>
 
-> Typesettings is a handful of utilities to help keep managing typography consistent. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.
+> Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.
 
 ## Install
 
 ```sh
-npm i --save typesettings-js
-
 yarn add typesettings-js
 ```
 
-## Typesettings Object
+## Typesettings
 
 You can generate this (as json) automatically with sketch using the [typesettings sketch plugin](https://github.com/buames/typesettings-sketch-plugin).
 
@@ -22,12 +20,11 @@ You can generate this (as json) automatically with sketch using the [typesetting
 const Typesettings = {
   family: String,
   fallback: String,
-  // all other keys are considered 'variants' of the typeface
   [variant]: {
     fontStyle: String,
     fontWeight: Number,
     sources: {
-      locals: Array< String >,
+      locals: Array<String>,
       eot: String,
       woff: String,
       woff2: String,
@@ -96,21 +93,27 @@ const Typesettings = {
 }
 ```
 
+## Generate Fonts
 
-## API methods
+```sh
+generateFonts(Typesettings: Object, styles?: Object): Object
+```
 
-> Using [emotion](https://github.com/emotion-js/emotion) within the examples.
+Generates a map of typesettings to be used with CSS-in-JS frameworks. By default, `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform` will be return styles. You can pass in an object of styles that will be added to these.
 
-### `generateFonts(Typesettings)`
-
-Generates a map of typesettings to be used with CSS-in-JS frameworks.
+**Example**
 
 ```js
 import { styled } from '@emotion/core'
-import Typesettings from 'your_typesettings'
 import { generateFonts } from 'typesettings-js'
+import Typesettings from 'your_typesettings'
 
-const fonts = generateFonts(Typesettings)
+const styles = {
+  textRendering: 'optimizeLegibility',
+  WebkitFontSmoothing: 'antialiased'
+}
+
+const fonts = generateFonts(Typesettings, styles)
 
 /*
   Outputs an object like this:
@@ -139,9 +142,15 @@ render(
 )
 ```
 
-### `generateFontFace(Typesettings)`
+## Generate Font Face
 
-Generates @fontFace from typesettings as a string.
+```sh
+generateFontFace(Typesettings: Object): String
+```
+
+Generates @font-face from typesettings as a string.
+
+**Example**
 
 ```js
 import { Globals } from '@emotion/core'
