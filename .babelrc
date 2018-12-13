@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread"
+  ],
+  "presets": [
+    [ "@babel/env", {
+      "loose": true,
+      "modules": false
+    } ]
+  ]
+}
