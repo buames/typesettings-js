@@ -1,6 +1,6 @@
 {
   "name": "typesettings-js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A quest for consistency",
   "main": "dist/typesettings-js.cjs.js",
   "module": "dist/typesettings-js.esm.js",
@@ -8,7 +8,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">= 10.0.0"
+    "node": ">= 8.10.0"
   },
   "scripts": {
     "clean": "rm -rf dist",
