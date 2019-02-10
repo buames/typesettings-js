@@ -1,2 +1,2 @@
 export * from './fontFace'
-export * from './fonts'
+export { default as generateFonts } from './fonts'

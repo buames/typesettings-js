@@ -18,10 +18,10 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "tslint src/**/*.ts --project tsconfig.json",
-    "test": "yarn run lint && bundlesize && nyc ava",
-    "test-coverage": "nyc report",
-    "test-codecov": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "version-canary": "yarn publish --tag=canary && release --pre",
+    "test": "nyc ava",
+    "test:size": "bundlesize",
+    "test:codecov": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "version-canary": "npm publish --tag canary && release --pre",
     "prepare": "yarn run -s build"
   },
   "dependencies": {
@@ -66,8 +66,8 @@
       "src/*.ts"
     ],
     "exclude": [
-      "dist/**",
-      "test/**"
+      "dist",
+      "test"
     ],
     "extension": [
       ".ts"
@@ -81,7 +81,7 @@
     ]
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.ts": [
       "tslint --fix",
       "git add"
     ]

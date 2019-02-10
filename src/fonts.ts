@@ -12,10 +12,10 @@ import {
   Returns a weight property label‚ prefixed with 'n' for normal or 'i' for italics.
   For example, n700 equals 'normal' with a weight of '700'.
 */
-const getStyleLabel = (fontStyle: FontStyle, fontWeight: FontWeight) => {
+export const getStyleLabel = (fontStyle: FontStyle, fontWeight: FontWeight) => {
   switch (fontStyle) {
-    case FontStyle.normal: return `n${ fontWeight }`
-    case FontStyle.italic: return `i${ fontWeight }`
+    case FontStyle.Normal: return `n${ fontWeight }`
+    case FontStyle.Italic: return `i${ fontWeight }`
     default: return ''
   }
 }
@@ -24,7 +24,7 @@ const getStyleLabel = (fontStyle: FontStyle, fontWeight: FontWeight) => {
   Returns a property label to append to the style property
   label depending on the lettercasing type
 */
-const getTransformLabel = (lettercasing: LetterCasing) => {
+export const getTransformLabel = (lettercasing: LetterCasing) => {
   switch (lettercasing) {
     case LetterCasing.Upper: return '_caps'
     case LetterCasing.Lower: return '_lower'
@@ -33,7 +33,7 @@ const getTransformLabel = (lettercasing: LetterCasing) => {
   }
 }
 
-const toPx = ((n: number | string) => (typeof n === 'number' ? `${ n }px` : n))
+export const toPx = ((n: number | string) => (typeof n === 'number' ? `${ n }px` : n))
 
 /*
   Generates a map of typesettings. We do not return emotionjs classes
@@ -47,7 +47,7 @@ interface Options {
   styles?: AdditionalStyles
 }
 
-const generate = (options: Options) => {
+export const generate = (options: Options) => {
   const { variant, casing, family, fallback, styles } = options
   const sizes = variant[casing]
 
@@ -98,6 +98,4 @@ const generateFonts = (typesettings: Typesettings, styles?: AdditionalStyles) =>
   return deepmerge.all(settings)
 }
 
-export {
-  generateFonts
-}
+export default generateFonts

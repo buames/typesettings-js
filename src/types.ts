@@ -4,9 +4,9 @@ export enum LetterCasing {
   Lower = 'lowercase'
 }
 
-export enum FontStyle {
-  normal = 'normal',
-  italic = 'italic'
+export const enum FontStyle {
+  Normal = 'normal',
+  Italic = 'italic'
 }
 
 export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
