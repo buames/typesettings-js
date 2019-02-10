@@ -1,4 +1,3 @@
-/* eslint-disable global-require, import/no-extraneous-dependencies */
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import ts from 'rollup-plugin-typescript2'

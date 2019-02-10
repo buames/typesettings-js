@@ -1,7 +1,18 @@
-.rpt2_cache
-dist
+# dependencies
 node_modules
-.npm
-*.log
 *.lock
+
+# build
+dist
+.rpt2_cache
+
+# test
+.nyc_output
+coverage
+
+# logs
+npm-debug.log
+yarn-error.log
+
+# dumb
 .DS_Store
