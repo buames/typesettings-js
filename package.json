@@ -2,27 +2,27 @@
   "name": "typesettings-js",
   "version": "0.0.9-canary.1",
   "description": "A quest for consistency",
-  "main": "dist/typesettings-js.cjs.js",
-  "module": "dist/typesettings-js.esm.js",
-  "browser": "dist/typesettings-js.umd.js",
-  "types": "types/index.d.ts",
+  "main": "./dist/typesettings-js.cjs.js",
+  "module": "./dist/typesettings-js.esm.js",
+  "browser": "./dist/typesettings-js.umd.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
   "engines": {
     "node": ">= 8.10.0"
   },
   "scripts": {
     "prebuild": "rm -rf dist",
-    "postbuild": "yarn dts-bundle-generator -o ./types/index.d.ts ./dist/types/index.d.ts",
+    "postbuild": "yarn dts-bundle-generator -o ./dist/index.d.ts ./dist/src/index.d.ts",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "tslint src/**/*.ts --project tsconfig.json",
     "test": "nyc ava",
     "test:size": "bundlesize",
     "test:codecov": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "version-canary": "yarn version --tag canary && release --pre canary",
+    "release:canary": "yarn version --tag canary",
+    "release:changlog": "release --pre",
     "prepare": "yarn run -s build"
   },
   "dependencies": {

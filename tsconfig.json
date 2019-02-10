@@ -5,7 +5,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "declaration": true,
-    "declarationDir": "./dist/types",
+    "declarationDir": "./dist/src",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
