@@ -2,7 +2,7 @@ import test from 'ava'
 import { generateFonts, generateFontFace } from '../src'
 
 const config = {
-  family: 'Helvetica',
+  family: '\'Helvetica\'',
   fallback: '-apple-system, BlinkMacSystemFont',
   regular: {
     fontStyle: 'normal',
