@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "typeRoots": ["./node_modules/@types"],
+  }
+}

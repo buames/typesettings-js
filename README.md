@@ -14,7 +14,7 @@ yarn add typesettings-js
 
 ## Typesettings
 
-You can generate this (as json) automatically with sketch using the [typesettings sketch plugin](https://github.com/buames/typesettings-sketch-plugin).
+You can generate most of this (as json) automatically with sketch using the [typesettings sketch plugin](https://github.com/buames/typesettings-sketch-plugin).
 
 ```js
 const Typesettings = {
@@ -64,12 +64,12 @@ const Typesettings = {
         paragraphSpacing: 0
       },
       12: {
-        characterSpacing: -0.07999999821186066,
+        characterSpacing: -0.08,
         lineHeight: 18,
         paragraphSpacing: 0
       },
       14: {
-        characterSpacing: -0.1500000059604645,
+        characterSpacing: -0.15,
         lineHeight: 20,
         paragraphSpacing: 0
       }
@@ -80,7 +80,7 @@ const Typesettings = {
         lineHeight: null,
         paragraphSpacing: 0
       },
-      ... 
+      ...
     }
   },
   medium: {
@@ -137,7 +137,7 @@ const Paragraph = styled('p')`
 
 render(
   <Paragraph>
-    My font size is 16px and my font weight is regular.
+    My font size is 16 and my font weight is regular.
   </Paragraph>
 )
 ```
@@ -148,14 +148,14 @@ render(
 generateFontFace(Typesettings: Object): String
 ```
 
-Generates @font-face from typesettings as a string.
+Generates a @font-face css declariation from typesettings.
 
 **Example**
 
 ```js
 import { Globals } from '@emotion/core'
-import Typesettings from 'your_typesettings'
 import { generateFontFace } from 'typesettings-js'
+import Typesettings from 'your_typesettings'
 
 const fontFace = generateFontFace(Typesettings)
 
@@ -163,7 +163,7 @@ render(
   <div>
     <Global styles={ css`
         ${ fontFace };
-        ... 
+        ...
       `}
     />
   </div>
