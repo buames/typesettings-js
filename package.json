@@ -5,16 +5,17 @@
   "main": "dist/typesettings-js.cjs.js",
   "module": "dist/typesettings-js.esm.js",
   "browser": "dist/typesettings-js.umd.js",
-  "types": "dist/types/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "engines": {
     "node": ">= 8.10.0"
   },
   "scripts": {
     "prebuild": "rm -rf dist",
-    "postbuild": "yarn dts-bundle-generator -o ./dist/index.d.ts ./dist/types/index.d.ts",
+    "postbuild": "yarn dts-bundle-generator -o ./types/index.d.ts ./dist/types/index.d.ts",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "tslint src/**/*.ts --project tsconfig.json",
