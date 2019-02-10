@@ -5,7 +5,8 @@ import {
   AdditionalStyles,
   FontVariant,
   LetterCasing,
-  Typesettings
+  Typesettings,
+  FontSettings
 } from './types'
 
 /*
@@ -33,8 +34,6 @@ export const getTransformLabel = (lettercasing: LetterCasing) => {
   }
 }
 
-export const toPx = ((n: number | string) => (typeof n === 'number' ? `${ n }px` : n))
-
 /*
   Generates a map of typesettings. We do not return emotionjs classes
   as it would not work with media queries properly.
@@ -57,19 +56,19 @@ export const generate = (options: Options) => {
 
   return Object.keys(sizes).reduce(
     (accum, size) => {
-      const { characterSpacing, lineHeight } = sizes[size]
+      const { characterSpacing, lineHeight } = sizes[size] as FontSettings
       const styleLabel = getStyleLabel(variant.fontStyle, variant.fontWeight)
       const transformLabel = getTransformLabel(casing)
 
       accum[`s${ size }`] = { }
       accum[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
         fontFamily: fallback ? `${ family }, ${ fallback }` : family,
-        fontSize: toPx(size),
+        fontSize: `${ size }px`,
         fontStyle: variant.fontStyle,
         fontWeight: variant.fontWeight,
-        letterSpacing: `${ characterSpacing ? toPx(characterSpacing.toFixed(2)) : undefined }`,
-        lineHeight: `${ lineHeight ? toPx(lineHeight) : 'normal' }`,
-        textTransform: `${ casing !== LetterCasing.Normal ? casing : undefined }`,
+        letterSpacing: characterSpacing ? `${ characterSpacing.toFixed(2) }px` : null,
+        lineHeight: lineHeight ? `${ lineHeight }px` : 'normal',
+        textTransform: casing !== LetterCasing.Normal ? `${ casing }` : null,
         ...styles || { }
       }
 

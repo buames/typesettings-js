@@ -2,7 +2,7 @@
 Typesettings
 
 [![npm](https://img.shields.io/npm/v/typesettings-js.svg?style=flat-square)](https://www.npmjs.com/package/typesettings-js)
-[![codecov](https://codecov.io/gh/buames/typesettings-js/branch/master/graph/badge.svg)](https://codecov.io/gh/buames/typesettings-js)
+[![codecov](https://codecov.io/gh/buames/typesettings-js/branch/buames/ts/graph/badge.svg)](https://codecov.io/gh/buames/typesettings-js)
 </h1>
 
 > Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.

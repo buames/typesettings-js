@@ -2,8 +2,7 @@ import test from 'ava'
 import { FontStyle, LetterCasing } from '../src/types'
 import {
   getStyleLabel,
-  getTransformLabel,
-  toPx
+  getTransformLabel
 } from '../src/fonts'
 
 test('Should return a "normal" style label with a regular font weight', (t) => {
@@ -32,12 +31,4 @@ test('Should return an empty transform label when the casing is normalcase', (t)
 
 test('Should return an empty transform label when the casing doesnt match LetterCasing', (t) => {
   t.is(getTransformLabel('food' as LetterCasing), '')
-})
-
-test('Should return a pixel unit when the value is a number', (t) => {
-  t.is(toPx(10), '10px')
-})
-
-test('Should not return a pixel unit when the value is a string', (t) => {
-  t.is(toPx('10'), '10')
 })

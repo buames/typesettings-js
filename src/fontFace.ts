@@ -10,13 +10,13 @@ const getSources = (sources: FileSources) => {
 
   const files = [
     sources.eot && { src: `${ sources.eot }#iefix`, format: 'embedded-opentype' },
-    sources.woff2 && { src: `${ sources.woff2 }`, format: 'woff2' },
-    sources.woff && { src: `${ sources.woff }`, format: 'woff' },
-    sources.ttf && { src: `${ sources.ttf }`, format: 'ttf' }
+    sources.woff2 && { src: sources.woff2, format: 'woff2' },
+    sources.woff && { src: sources.woff, format: 'woff' },
+    sources.ttf && { src: sources.ttf, format: 'ttf' }
   ].filter(Boolean)
 
   if (files.length > 0) {
-    files.forEach(file => srcs.push(`url(${ file }) format(${ file })`))
+    files.forEach(file => srcs.push(`url(${ file.src }) format(${ file.format })`))
   }
 
   return `src: ${ srcs.join(',') }`
