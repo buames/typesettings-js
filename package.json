@@ -1,9 +1,11 @@
 {
   "name": "typesettings-js",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A quest for consistency",
-  "main": "dist/typesettings-js.cjs.js",
-  "module": "dist/typesettings-js.esm.js",
+  "main": "./dist/typesettings-js.cjs.js",
+  "module": "./dist/typesettings-js.esm.js",
+  "browser": "./dist/typesettings-js.umd.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -11,38 +13,77 @@
     "node": ">= 8.10.0"
   },
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "yarn clean && yarn rollup && yarn rollup:umd",
-    "watch": "rollup -c rollup.config.js --watch",
-    "test": "yarn build && yarn lint && yarn size",
-    "rollup": "rollup -c rollup.config.js",
-    "rollup:umd": "UMD=true rollup -c rollup.config.js",
-    "lint": "eslint --ext .js src",
-    "size": "bundlesize",
+    "prebuild": "rm -rf dist",
+    "postbuild": "yarn dts-bundle-generator -o ./dist/index.d.ts ./dist/src/index.d.ts",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "lint": "tslint src/**/*.ts --project tsconfig.json",
+    "test": "nyc ava",
+    "test:size": "bundlesize",
+    "test:codecov": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "release:canary": "yarn version --tag canary",
+    "release:changelog": "release --pre",
     "prepare": "yarn run -s build"
   },
   "dependencies": {
-    "deepmerge": "^3.0.0"
+    "deepmerge": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "babel-eslint": "10.0.1",
-    "bundlesize": "^0.17.0",
-    "eslint": "^5.10.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "husky": "^1.2.0",
-    "lint-staged": "^8.1.0",
-    "rollup": "^0.67.4",
-    "rollup-plugin-babel": "^4.0.2",
-    "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-uglify": "^6.0.0",
-    "rollup-watch": "^4.3.1"
+    "@types/rollup-plugin-commonjs": "^9.2.0",
+    "@types/rollup-plugin-node-resolve": "^4.0.0",
+    "ava": "^1.2.1",
+    "bundlesize": "^0.17.1",
+    "codecov": "^3.1.0",
+    "dts-bundle-generator": "^2.0.0",
+    "esm": "^3.2.4",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.3",
+    "nyc": "^13.2.0",
+    "release": "^6.0.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-typescript2": "^0.19.2",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.3.3"
+  },
+  "ava": {
+    "verbose": true,
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "esm",
+      "ts-node/register"
+    ]
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/*.ts"
+    ],
+    "exclude": [
+      "dist",
+      "test"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ]
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix",
+    "*.ts": [
+      "tslint --fix",
       "git add"
     ]
   },
@@ -54,16 +95,16 @@
   },
   "bundlesize": [
     {
-      "path": "dist/index.umd.min.js",
+      "path": "dist/typesettings-js.umd.js",
       "maxSize": "1.5 kb"
     },
     {
       "path": "dist/typesettings-js.cjs.js",
-      "maxSize": "2 kb"
+      "maxSize": "1.5 kb"
     },
     {
       "path": "dist/typesettings-js.esm.js",
-      "maxSize": "2 kb"
+      "maxSize": "1.5 kb"
     }
   ],
   "homepage": "https://github.com/buames/typesettings-js#readme",

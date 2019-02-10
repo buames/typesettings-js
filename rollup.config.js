@@ -1,31 +1,38 @@
-import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
-import { uglify } from 'rollup-plugin-uglify'
+import commonjs from 'rollup-plugin-commonjs'
+import ts from 'rollup-plugin-typescript2'
+import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
-const config = {
-  input: './src/index.js',
-  output: [
-    { file: pkg.main, format: 'cjs' },
-    { file: pkg.module, format: 'es' }
-  ],
-  plugins: [
-    babel({
-      exclude: 'node_modules/**'
-    }),
-    resolve()
-  ]
-}
+const input = 'src/index.ts'
 
-if (process.env.UMD) {
-  config.plugins.push(uglify())
-  config.output = [
-    {
-      file: './dist/index.umd.min.js',
-      format: 'umd',
-      name: pkg.name
-    }
-  ]
-}
+const typescript = () => ts({
+  typescript: require('typescript'),
+  useTsconfigDeclarationDir: true
+})
 
-export default config
+export default [
+  {
+    input,
+    output: {
+      name: pkg.name,
+      file: pkg.browser,
+      format: 'umd'
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript(),
+      terser()
+    ]
+  },
+  {
+    input,
+    external: [ 'deepmerge' ],
+    plugins: [ typescript() ],
+    output: [
+      { file: pkg.main, format: 'cjs' },
+      { file: pkg.module, format: 'es' }
+    ]
+  }
+]

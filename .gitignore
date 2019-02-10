@@ -1,6 +1,21 @@
-dist
+# dependencies
 node_modules
-.npm
-*.log
 *.lock
+
+# build
+dist
+.rpt2_cache
+
+# test
+.nyc_output
+coverage
+coverage.lcov
+
+# logs
+npm-debug.log
+yarn-error.log
+
+# dumb
 .DS_Store
+
+codecov.yml
