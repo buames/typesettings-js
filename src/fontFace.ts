@@ -34,7 +34,7 @@ const generateFontFace = (typesettings: Typesettings) => {
     }
 
     const face = [
-      `font-family: '${ family }'`,
+      `font-family: ${ family }`,
       `font-weight: ${ variant.fontWeight }`,
       `font-style: ${ variant.fontStyle }`
     ]
@@ -47,8 +47,8 @@ const generateFontFace = (typesettings: Typesettings) => {
       face.push(getSources(variant.sources))
     }
 
-    return `@font-face { ${ face.join(';') } };`
-  }).join('')
+    return `@font-face { ${ face.join(';') } }`
+  }).join(' ')
 
   return fontFace
 }
