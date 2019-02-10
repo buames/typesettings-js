@@ -9,6 +9,7 @@ dist
 # test
 .nyc_output
 coverage
+coverage.lcov
 
 # logs
 npm-debug.log

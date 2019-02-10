@@ -16,7 +16,7 @@ const getSources = (sources: FileSources) => {
   ].filter(Boolean)
 
   if (files.length > 0) {
-    files.forEach(file => srcs.push(`url(${ file.src }) format(${ file.format })`))
+    files.forEach(file => srcs.push(`url(${ file.src }) format('${ file.format }')`))
   }
 
   return `src: ${ srcs.join(',') }`
@@ -34,7 +34,7 @@ const generateFontFace = (typesettings: Typesettings) => {
     }
 
     const face = [
-      `font-family: ${ family }`,
+      `font-family: '${ family }'`,
       `font-weight: ${ variant.fontWeight }`,
       `font-style: ${ variant.fontStyle }`
     ]

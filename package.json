@@ -1,6 +1,6 @@
 {
   "name": "typesettings-js",
-  "version": "0.0.9-canary.3",
+  "version": "0.0.9-canary.4",
   "description": "A quest for consistency",
   "main": "./dist/typesettings-js.cjs.js",
   "module": "./dist/typesettings-js.esm.js",
@@ -22,7 +22,7 @@
     "test:size": "bundlesize",
     "test:codecov": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "release:canary": "yarn version --tag canary",
-    "release:changlog": "release --pre",
+    "release:changelog": "release --pre",
     "prepare": "yarn run -s build"
   },
   "dependencies": {
