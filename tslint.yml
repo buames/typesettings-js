@@ -5,9 +5,6 @@ rules:
   indent:
     - error
     - 2
-  semicolon:
-    - true
-    - never
   trailing-comma:
     - true
     - multiline: never
