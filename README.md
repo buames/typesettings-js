@@ -20,10 +20,10 @@ You can generate most of this (as json) automatically with sketch using the [typ
 ```js
 const Typesettings = {
   family: String,
-  fallback: String,
-  [variant]: {
-    fontStyle: String,
-    fontWeight: Number,
+  fallback: Array<String>,
+  variants: Array<{
+    fontStyle: 'italic' | 'normal' | 'oblique' | string,
+    fontWeight: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 'bold' | 'bolder' | 'normal' | 'lighter',
     sources: {
       locals: Array<String>,
       eot: String,
@@ -31,14 +31,15 @@ const Typesettings = {
       woff2: String,
       ttf: String
     },
-    [lettercasing]: {
+    ['normalcase' | 'uppercase' | 'lowercase']: {
       [size]: {
-        characterSpacing: Number,
-        lineHeight: Number,
-        paragraphSpacing: Number
+        characterSpacing: String | Number | Undefined,
+        lineHeight: String | Number | Undefined,
+        paragraphSpacing: String | Number | Undefined
       }
+      ... 
     }
-  }
+  }>
 }
 ```
 
@@ -48,49 +49,45 @@ const Typesettings = {
 const Typesettings = {
   family: 'Helvetica Neue',
   fallback: "-apple-system, BlinkMacSystemFont, 'Arial', sans-serif",
-  regular: {
-    fontStyle: 'normal',
-    fontWeight: 400,
-    sources: {
-      locals: [ 'Font Display Name', 'Font Postscript Name' ],
-      eot: require('./font-path.eot'),
-      woff: require('./font-path.woff'),
-      woff2: require('./font-path.woff2'),
-      ttf: require('./font-path.ttf')
-    },
-    normalcase: {
-      10: {
-        characterSpacing: 0,
-        lineHeight: null,
-        paragraphSpacing: 0
+  variants: [
+    {
+      fontStyle: 'normal',
+      fontWeight: 400,
+      sources: {
+        locals: [ 'Font Display Name', 'Font Postscript Name' ],
+        eot: require('./font-path.eot'),
+        woff: require('./font-path.woff'),
+        woff2: require('./font-path.woff2'),
+        ttf: require('./font-path.ttf')
       },
-      12: {
-        characterSpacing: -0.08,
-        lineHeight: 18,
-        paragraphSpacing: 0
+      normalcase: {
+        10: {
+          characterSpacing: 0,
+          lineHeight: null,
+          paragraphSpacing: 0
+        },
+        12: {
+          characterSpacing: -0.08,
+          lineHeight: 18,
+          paragraphSpacing: 0
+        },
+        14: {
+          characterSpacing: -0.15,
+          lineHeight: 20,
+          paragraphSpacing: 0
+        }
       },
-      14: {
-        characterSpacing: -0.15,
-        lineHeight: 20,
-        paragraphSpacing: 0
+      uppercase: {
+        12: {
+          characterSpacing: 0.1,
+          lineHeight: null,
+          paragraphSpacing: 0
+        },
+        ...
       }
     },
-    uppercase: {
-      12: {
-        characterSpacing: 0.1,
-        lineHeight: null,
-        paragraphSpacing: 0
-      },
-      ...
-    }
-  },
-  medium: {
-    ...
-  },
-  bold: {
-    ...
-  },
-  // ... and so on
+    // ... and so on
+  ]
 }
 ```
 

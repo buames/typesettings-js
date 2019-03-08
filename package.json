@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prebuild": "rm -rf dist",
-    "postbuild": "yarn dts-bundle-generator -o ./dist/index.d.ts ./dist/src/index.d.ts",
+    "postbuild": "yarn dts-bundle-generator -o ./dist/index.d.ts ./dist/gen-types/index.d.ts",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "tslint src/**/*.ts --project tsconfig.json",
@@ -100,11 +100,11 @@
     },
     {
       "path": "dist/typesettings-js.cjs.js",
-      "maxSize": "1.5 kb"
+      "maxSize": "1.3 kb"
     },
     {
       "path": "dist/typesettings-js.esm.js",
-      "maxSize": "1.5 kb"
+      "maxSize": "1.3 kb"
     }
   ],
   "homepage": "https://github.com/buames/typesettings-js#readme",

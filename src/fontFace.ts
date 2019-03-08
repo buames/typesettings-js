@@ -1,58 +1,35 @@
-import { FileSources, Typesettings } from './types'
+import { Typesettings } from './types';
 
-const getSources = (sources: FileSources) => {
-  const srcs = []
+export const generateFontFace = (typesettings: Typesettings) => {
+  const { family, variants } = typesettings;
 
-  if (sources.locals) {
-    const locals = sources.locals.map(name => `local('${ name }')`)
-    srcs.push(...locals)
-  }
+  const fontFamily = /\s/g.test(family) ? `'${ family }'` : family;
 
-  const files = [
-    sources.eot && { src: `${ sources.eot }#iefix`, format: 'embedded-opentype' },
-    sources.woff2 && { src: sources.woff2, format: 'woff2' },
-    sources.woff && { src: sources.woff, format: 'woff' },
-    sources.ttf && { src: sources.ttf, format: 'ttf' }
-  ].filter(Boolean)
+  const fontFace = variants.map((variant) => {
+    const { sources, fontStyle, fontWeight } = variant;
 
-  if (files.length > 0) {
-    files.forEach(file => srcs.push(`url(${ file.src }) format('${ file.format }')`))
-  }
-
-  return `src: ${ srcs.join(',') }`
-}
-
-const generateFontFace = (typesettings: Typesettings) => {
-  if (typeof typesettings !== 'object') {
-    throw TypeError('Typesettings must be an object')
-  }
-
-  const { family, fallback, ...variants } = typesettings
-  const fontFace = Object.values(variants).map((variant) => {
-    if (!variant.sources) {
-      throw Error(`Missing font file sources for ${ variant }`)
+    if (!sources || (sources && Object.keys(sources).length === 0)) {
+      throw Error('Missing font file sources');
     }
+
+    const srcs = [
+      sources.locals && sources.locals.map(name => (`local('${ name }')`)),
+      sources.eot && `url(${ sources.eot }#iefix) format('embedded-opentype')`,
+      sources.woff2 && `url(${ sources.woff2 }) format('woff2')`,
+      sources.woff && `url(${ sources.woff }) format('woff')`,
+      sources.ttf && `url(${ sources.ttf }) format('ttf')`
+    ].filter(Boolean);
 
     const face = [
-      `font-family: ${ family }`,
-      `font-weight: ${ variant.fontWeight }`,
-      `font-style: ${ variant.fontStyle }`
-    ]
+      `font-family: ${ fontFamily }`,
+      `font-weight: ${ fontWeight }`,
+      fontStyle && `font-style: ${ fontStyle }`,
+      sources.eot && `src: url(${ sources.eot })`,
+      srcs && `src: ${ srcs.join(', ') };`
+    ].filter(Boolean);
 
-    if (variant.sources) {
-      if (variant.sources.eot) {
-        face.push(`src: url(${ variant.sources.eot })`)
-      }
+    return `@font-face { ${ face.join('; ') } }`;
+  }).join(' ');
 
-      face.push(getSources(variant.sources))
-    }
-
-    return `@font-face { ${ face.join(';') } }`
-  }).join(' ')
-
-  return fontFace
-}
-
-export {
-  generateFontFace
-}
+  return fontFace;
+};
