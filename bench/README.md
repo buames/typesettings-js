@@ -1,10 +1,11 @@
 
 # Benchmarks
 
-function | v0.1.2
----|---
-generateFonts | 15,107
-generateFontFace | 202,995
+## v0.1.3
+```
+generateFonts x 18,139 ops/sec ±0.61% (90 runs sampled)
+generateFontFace x 227,436 ops/sec ±0.30% (95 runs sampled)
+```
 
 ## v0.1.2
 ```

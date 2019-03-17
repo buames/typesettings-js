@@ -1,16 +1,27 @@
 // tslint:disable align
 import merge from 'deepmerge';
+import { FontFamilyProperty } from 'csstype';
 import {
   AdditionalStyles,
-  FontFamily,
-  LetterCasing,
-  Property,
-  Variant,
-  Typesettings
+  Typesettings,
+  TypesettingLetterCasing,
+  TypesettingProperty,
+  TypesettingResult
 } from './types';
 
-const px = (n: Property, amount: number = 0) => (
-  typeof n === 'number' && n !== 0 ? `${ n.toFixed(amount) }px` : n
+/*
+  Returns a normalized FontFamily name where names with
+  a space are automatically wrapped in quotes
+*/
+const getFamilyName = (family: FontFamilyProperty) => (
+  /\s/g.test(family) ? `'${ family }'` : family
+);
+
+/*
+  Returns a pixel value or the raw css value
+*/
+const px = (n: TypesettingProperty) => (
+  typeof n === 'number' && n !== 0 ? `${ n }px` : n
 );
 
 /*
@@ -19,7 +30,7 @@ const px = (n: Property, amount: number = 0) => (
   However, if the weight is a string (ie 'bold'), this returns the prefix + a capitalized
   weight. For example, nBold.
 */
-const getStyleLabel = ({ fontStyle, fontWeight }: Variant) => (
+const getStyleLabel = ({ fontStyle, fontWeight }) => (
   `${ fontStyle.charAt(0) }${ typeof fontWeight === 'string'
     ? `${ fontWeight.charAt(0).toUpperCase() }${ fontWeight.slice(1) }`
     : fontWeight }`
@@ -29,23 +40,17 @@ const getStyleLabel = ({ fontStyle, fontWeight }: Variant) => (
   Returns a property label to append to the style property
   label depending on the lettercasing type
 */
-const getTransformLabel = (casing: LetterCasing) => (
+const getTransformLabel = (casing: TypesettingLetterCasing) => (
   (casing === 'uppercase') ? '_caps'  : (casing === 'lowercase') ? '_lower' : ''
 );
 
 /*
-  Returns a normalized FontFamily name where names with
-  a space are automatically wrapped in quotes
+  Generates a map of typesettings
 */
-const getFamilyName = (family: FontFamily) => (
-  /\s/g.test(family) ? `'${ family }'` : family
-);
-
-/*
-  Generates a map of typesettings. We do not return emotionjs classes
-  as it would not work with media queries properly.
-*/
-export const generateFonts = (typesettings: Typesettings, styles?: AdditionalStyles) => {
+export const generateFonts = (
+  typesettings: Typesettings,
+  styles?: AdditionalStyles
+): { [size: string]: TypesettingResult } => {
   const { variants, family, fallbacks } = typesettings;
   const fontFamily = [
     getFamilyName(family),
@@ -53,7 +58,8 @@ export const generateFonts = (typesettings: Typesettings, styles?: AdditionalSty
   ].filter(Boolean).join(', ');
 
   const settings = variants.map((variant) => {
-    const styleLabel = getStyleLabel(variant);
+    const { fontStyle, fontWeight } = variant;
+    const styleLabel = getStyleLabel({ fontStyle, fontWeight });
     const style = {
       fontFamily,
       fontStyle: variant.fontStyle,
@@ -61,7 +67,7 @@ export const generateFonts = (typesettings: Typesettings, styles?: AdditionalSty
       ...styles || { }
     };
 
-    const sets = ['normalcase', 'uppercase', 'lowercase'].map((casing) => {
+    const sets: TypesettingResult[] = ['normalcase', 'uppercase', 'lowercase'].map((casing) => {
       const sizes = variant[casing];
 
       if (!sizes) return { };
@@ -74,7 +80,7 @@ export const generateFonts = (typesettings: Typesettings, styles?: AdditionalSty
         acc[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
           ...style,
           fontSize: px(parseFloat(size)),
-          letterSpacing: characterSpacing && px(characterSpacing, 2),
+          letterSpacing: characterSpacing && px(characterSpacing),
           lineHeight: lineHeight && px(lineHeight),
           textTransform: casing !== 'normalcase' ? casing : 'none'
         };
@@ -86,5 +92,5 @@ export const generateFonts = (typesettings: Typesettings, styles?: AdditionalSty
     return merge.all(sets.filter(Boolean));
   });
 
-  return merge.all(settings);
+  return merge.all<{ [size: string]: TypesettingResult }>(settings);
 };
