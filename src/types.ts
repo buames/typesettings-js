@@ -39,19 +39,3 @@ export interface FontSettings {
 export interface AdditionalStyles {
   [k: string]: Property;
 }
-
-export interface FontsResult {
-  [k: string]: {
-    fontFamily?: FontFamily,
-    fontStyle?: FontStyle,
-    fontSize?: Property,
-    fontWeight?: FontWeight,
-    letterSpacing?: Property,
-    lineHeight?: 'normal' | Property,
-    textTransform?: 'normal' | 'uppercase' | 'lowercase'
-  };
-}
-
-export interface GenerateFontsResult {
-  [size: string]: FontsResult;
-}

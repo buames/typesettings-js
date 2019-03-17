@@ -1,9 +1,8 @@
 // tslint:disable align
-import deepmerge from 'deepmerge';
+import merge from 'deepmerge';
 import {
   AdditionalStyles,
   FontFamily,
-  GenerateFontsResult,
   LetterCasing,
   Property,
   Variant,
@@ -30,13 +29,9 @@ const getStyleLabel = ({ fontStyle, fontWeight }: Variant) => (
   Returns a property label to append to the style property
   label depending on the lettercasing type
 */
-const getTransformLabel = (lettercasing: LetterCasing) => {
-  switch (lettercasing) {
-    case 'uppercase': return '_caps';
-    case 'lowercase': return '_lower';
-    default: return '';
-  }
-};
+const getTransformLabel = (casing: LetterCasing) => (
+  (casing === 'uppercase') ? '_caps'  : (casing === 'lowercase') ? '_lower' : ''
+);
 
 /*
   Returns a normalized FontFamily name where names with
@@ -50,64 +45,46 @@ const getFamilyName = (family: FontFamily) => (
   Generates a map of typesettings. We do not return emotionjs classes
   as it would not work with media queries properly.
 */
-const generate = ({
-  casing,
-  family,
-  fallbacks,
-  variant,
-  styles
-}: {
-  casing: LetterCasing;
-  family: FontFamily;
-  fallbacks?: FontFamily[];
-  variant: Variant;
-  styles?: AdditionalStyles;
-}) => {
-  const sizes = variant[casing];
-
-  if (!sizes) {
-    return { };
-  }
-
-  const transformLabel = getTransformLabel(casing);
-
+export const generateFonts = (typesettings: Typesettings, styles?: AdditionalStyles) => {
+  const { variants, family, fallbacks } = typesettings;
   const fontFamily = [
     getFamilyName(family),
     fallbacks && fallbacks.map(name => getFamilyName(name))
-  ].filter(Boolean);
+  ].filter(Boolean).join(', ');
 
-  return Object.keys(sizes).reduce((acc, size) => {
-    const { characterSpacing, lineHeight } = sizes[size];
+  const settings = variants.map((variant) => {
     const styleLabel = getStyleLabel(variant);
-
-    acc[`s${ size }`] = { };
-    acc[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
-      fontFamily: fontFamily.join(', '),
-      fontSize: px(parseFloat(size)),
+    const style = {
+      fontFamily,
       fontStyle: variant.fontStyle,
       fontWeight: variant.fontWeight,
-      letterSpacing: characterSpacing && px(characterSpacing, 2),
-      lineHeight: lineHeight && px(lineHeight),
-      textTransform: casing !== 'normalcase' ? casing : 'normal',
       ...styles || { }
     };
 
-    return acc;
-  }, { });
-};
+    const sets = ['normalcase', 'uppercase', 'lowercase'].map((casing) => {
+      const sizes = variant[casing];
 
-export const generateFonts = (
-  typesettings: Typesettings,
-  styles?: AdditionalStyles
-): GenerateFontsResult => {
-  const { family, fallbacks, variants } = typesettings;
-  const settings = variants.map((variant) => {
-    const sets = ['normalcase', 'uppercase', 'lowercase'].map(casing => (
-      variant[casing] && generate({ casing, family, fallbacks, variant, styles })
-    ));
+      if (!sizes) return { };
 
-    return deepmerge.all(sets.filter(Boolean));
+      const transformLabel = getTransformLabel(casing);
+      return Object.keys(sizes).reduce((acc, size) => {
+        const { characterSpacing, lineHeight } = sizes[size];
+
+        acc[`s${ size }`] = { };
+        acc[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
+          ...style,
+          fontSize: px(parseFloat(size)),
+          letterSpacing: characterSpacing && px(characterSpacing, 2),
+          lineHeight: lineHeight && px(lineHeight),
+          textTransform: casing !== 'normalcase' ? casing : 'none'
+        };
+
+        return acc;
+      }, { });
+    });
+
+    return merge.all(sets.filter(Boolean));
   });
 
-  return deepmerge.all<GenerateFontsResult>(settings);
+  return merge.all(settings);
 };
