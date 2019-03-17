@@ -1,6 +1,6 @@
 {
   "name": "typesettings-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A quest for consistency",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
