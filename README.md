@@ -15,8 +15,6 @@ yarn add typesettings-js
 
 ## Typesettings
 
-You can generate most of this (as json) automatically with sketch using the [typesettings sketch plugin](https://github.com/buames/typesettings-sketch-plugin).
-
 ```js
 const Typesettings = {
   family: String,
@@ -31,14 +29,14 @@ const Typesettings = {
       woff2: String,
       ttf: String
     },
-    ['normalcase' | 'uppercase' | 'lowercase']: {
-      [size]: {
-        characterSpacing: String | Number | Undefined,
-        lineHeight: String | Number | Undefined,
-        paragraphSpacing: String | Number | Undefined
+    ['normalcase' | 'uppercase' | 'lowercase']: [
+      {
+        fontSize: String | 0 | Number,
+        letterSpacing: String | 0 | Number | null,
+        lineHeight: String | 0 | Number | null
       }
-      ... 
-    }
+      ...
+    ]
   }>
 }
 ```
@@ -48,7 +46,7 @@ const Typesettings = {
 ```js
 const Typesettings = {
   family: 'Helvetica Neue',
-  fallback: "-apple-system, BlinkMacSystemFont, 'Arial', sans-serif",
+  fallbacks: [ '-apple-system', 'BlinkMacSystemFont', 'Arial', 'sans-serif' ],
   variants: [
     {
       fontStyle: 'normal',
@@ -60,31 +58,31 @@ const Typesettings = {
         woff2: require('./font-path.woff2'),
         ttf: require('./font-path.ttf')
       },
-      normalcase: {
-        10: {
-          characterSpacing: 0,
-          lineHeight: null,
-          paragraphSpacing: 0
+      normalcase: [
+        {
+          fontSize: 10,
+          letterSpacing: 0,
+          lineHeight: null
         },
-        12: {
-          characterSpacing: -0.08,
-          lineHeight: 18,
-          paragraphSpacing: 0
+        {
+          fontSize: 12,
+          letterSpacing: -0.08,
+          lineHeight: 18
         },
-        14: {
-          characterSpacing: -0.15,
-          lineHeight: 20,
-          paragraphSpacing: 0
+        {
+          fontSize: 14,
+          letterSpacing: -0.15,
+          lineHeight: 20
         }
-      },
-      uppercase: {
-        12: {
-          characterSpacing: 0.1,
-          lineHeight: null,
-          paragraphSpacing: 0
+      ],
+      uppercase: [
+        {
+          fontSize: 12,
+          letterSpacing: 0.1,
+          lineHeight: null
         },
         ...
-      }
+      ]
     },
     // ... and so on
   ]

@@ -16,7 +16,6 @@
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "removeComments": true,
-    "pretty": true,
     "typeRoots": ["./node_modules/@types"]
   },
   "include": [

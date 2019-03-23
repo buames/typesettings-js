@@ -8,13 +8,13 @@ module.exports = {
       sources: {
         locals: ['Helvetica Regular', 'Helvetica-Regular']
       },
-      normalcase: {
-        12: {
-          characterSpacing: null,
-          lineHeight: 18,
-          paragraphSpacing: 0
+      normalcase: [
+        {
+          fontSize: 20,
+          letterSpacing: null,
+          lineHeight: 18
         }
-      }
+      ]
     },
     {
       fontStyle: 'normal',
@@ -26,27 +26,27 @@ module.exports = {
         woff2: './font-file.woff2',
         ttf: './font-file.ttf'
       },
-      normalcase: {
-        20: {
-          characterSpacing: 0.29348573,
-          lineHeight: 22,
-          paragraphSpacing: 22
+      normalcase: [
+        {
+          fontSize: 20,
+          letterSpacing: 0.29348573,
+          lineHeight: 22
         }
-      },
-      lowercase: {
-        20: {
-          characterSpacing: null,
-          lineHeight: null,
-          paragraphSpacing: null
+      ],
+      lowercase: [
+        {
+          fontSize: 20,
+          letterSpacing: null,
+          lineHeight: null
         }
-      },
-      uppercase: {
-        20: {
-          characterSpacing: 1,
-          lineHeight: 1,
-          paragraphSpacing: 1
+      ],
+      uppercase: [
+        {
+          fontSize: 20,
+          letterSpacing: 1,
+          lineHeight: 1
         }
-      }
+      ]
     },
     {
       fontStyle: 'normal',
@@ -58,13 +58,13 @@ module.exports = {
         woff2: './font-file.woff2',
         ttf: './font-file.ttf'
       },
-      normalcase: {
-        20: {
-          characterSpacing: '0.29em',
-          lineHeight: 22,
-          paragraphSpacing: 22
+      normalcase: [
+        {
+          fontSize: '20rem',
+          letterSpacing: '0.29em',
+          lineHeight: '22em'
         }
-      }
+      ]
     }
   ]
 };
