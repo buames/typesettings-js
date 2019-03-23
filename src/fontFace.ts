@@ -1,35 +1,27 @@
-import { Typesettings } from './types';
+import { Typesettings, FontSourceFormats } from './types';
+import { getFamilyName } from './utils';
 
-export const generateFontFace = (typesettings: Typesettings) => {
-  const { family, variants } = typesettings;
-
-  const fontFamily = /\s/g.test(family) ? `'${ family }'` : family;
-
-  const fontFace = variants.map((variant) => {
-    const { sources, fontStyle, fontWeight } = variant;
-
+export const generateFontFace = ({ family, variants }: Typesettings): string => {
+  const declaration = variants.map(({ sources, fontStyle, fontWeight }) => {
     if (!sources || (sources && Object.keys(sources).length === 0)) {
       throw Error('Missing font file sources');
     }
 
-    const srcs = [
-      sources.locals && sources.locals.map(name => (`local('${ name }')`)),
-      sources.eot && `url(${ sources.eot }#iefix) format('embedded-opentype')`,
-      sources.woff2 && `url(${ sources.woff2 }) format('woff2')`,
-      sources.woff && `url(${ sources.woff }) format('woff')`,
-      sources.ttf && `url(${ sources.ttf }) format('ttf')`
-    ].filter(Boolean);
+    const srcs = Object.keys(sources).map(key => (
+      Array.isArray(sources[key])
+        ? sources[key].map((n: string) => (`local('${ n }')`))
+        : `url(${ sources[key] }) format('${ FontSourceFormats[key] }')`
+    ));
 
     const face = [
-      `font-family: ${ fontFamily }`,
-      `font-weight: ${ fontWeight }`,
+      `font-family: ${ getFamilyName(family) }`,
       fontStyle && `font-style: ${ fontStyle }`,
-      sources.eot && `src: url(${ sources.eot })`,
+      fontWeight && `font-weight: ${ fontWeight }`,
       srcs && `src: ${ srcs.join(', ') };`
     ].filter(Boolean);
 
     return `@font-face { ${ face.join('; ') } }`;
-  }).join(' ');
+  });
 
-  return fontFace;
+  return declaration.join(' ');
 };

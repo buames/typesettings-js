@@ -1,21 +1,19 @@
-// tslint:disable align
-import merge from 'deepmerge';
 import { FontFamilyProperty } from 'csstype';
+
 import {
   AdditionalStyles,
+  LetterCasing,
   Typesettings,
-  TypesettingLetterCasing,
   TypesettingProperty,
-  TypesettingResult
+  TypesettingResults,
+  TypesettingVariant,
+  TypesettingOptions
 } from './types';
 
-/*
-  Returns a normalized FontFamily name where names with
-  a space are automatically wrapped in quotes
-*/
-const getFamilyName = (family: FontFamilyProperty) => (
-  /\s/g.test(family) ? `'${ family }'` : family
-);
+import {
+  getFontStack,
+  parseSize
+} from './utils';
 
 /*
   Returns a pixel value or the raw css value
@@ -30,7 +28,7 @@ const px = (n: TypesettingProperty) => (
   However, if the weight is a string (ie 'bold'), this returns the prefix + a capitalized
   weight. For example, nBold.
 */
-const getStyleLabel = ({ fontStyle, fontWeight }) => (
+const getStyleLabel = ({ fontStyle, fontWeight }: TypesettingVariant) => (
   `${ fontStyle.charAt(0) }${ typeof fontWeight === 'string'
     ? `${ fontWeight.charAt(0).toUpperCase() }${ fontWeight.slice(1) }`
     : fontWeight }`
@@ -40,9 +38,46 @@ const getStyleLabel = ({ fontStyle, fontWeight }) => (
   Returns a property label to append to the style property
   label depending on the lettercasing type
 */
-const getTransformLabel = (casing: TypesettingLetterCasing) => (
-  (casing === 'uppercase') ? '_caps'  : (casing === 'lowercase') ? '_lower' : ''
+const getTransformLabel = (casing: LetterCasing | string) => (
+  (casing === LetterCasing.uppercase) ? '_caps'
+    : (casing === LetterCasing.lowercase) ? '_lower'
+    : ''
 );
+
+/*
+  Variant reducer
+*/
+const create = (
+  fontFamily: FontFamilyProperty,
+  styles: AdditionalStyles = { }
+) => (
+  acc: any,
+  variant: TypesettingVariant
+) => {
+  const { fontStyle, fontWeight, sources, ...casings } = variant;
+  const styleLabel = getStyleLabel(variant);
+  Object.keys(casings).forEach((casing) => {
+    const transformLabel = getTransformLabel(casing);
+
+    variant[casing].forEach((setting: TypesettingOptions) => {
+      const sizeLabel = `s${ parseSize(setting.fontSize) }`;
+
+      acc[sizeLabel] = acc[sizeLabel] || { };
+      acc[sizeLabel][`${ styleLabel }${ transformLabel }`] = {
+        fontFamily,
+        fontStyle,
+        fontWeight,
+        fontSize: px(setting.fontSize),
+        letterSpacing: setting.letterSpacing && px(setting.letterSpacing),
+        lineHeight: setting.lineHeight && px(setting.lineHeight),
+        textTransform: casing !== 'normalcase' ? casing : 'none',
+        ...styles
+      };
+    });
+  });
+
+  return acc;
+};
 
 /*
   Generates a map of typesettings
@@ -50,47 +85,8 @@ const getTransformLabel = (casing: TypesettingLetterCasing) => (
 export const generateFonts = (
   typesettings: Typesettings,
   styles?: AdditionalStyles
-): { [size: string]: TypesettingResult } => {
-  const { variants, family, fallbacks } = typesettings;
-  const fontFamily = [
-    getFamilyName(family),
-    fallbacks && fallbacks.map(name => getFamilyName(name))
-  ].filter(Boolean).join(', ');
-
-  const settings = variants.map((variant) => {
-    const { fontStyle, fontWeight } = variant;
-    const styleLabel = getStyleLabel({ fontStyle, fontWeight });
-    const style = {
-      fontFamily,
-      fontStyle: variant.fontStyle,
-      fontWeight: variant.fontWeight,
-      ...styles || { }
-    };
-
-    const sets: TypesettingResult[] = ['normalcase', 'uppercase', 'lowercase'].map((casing) => {
-      const sizes = variant[casing];
-
-      if (!sizes) return { };
-
-      const transformLabel = getTransformLabel(casing);
-      return Object.keys(sizes).reduce((acc, size) => {
-        const { characterSpacing, lineHeight } = sizes[size];
-
-        acc[`s${ size }`] = { };
-        acc[`s${ size }`][`${ styleLabel }${ transformLabel }`] = {
-          ...style,
-          fontSize: px(parseFloat(size)),
-          letterSpacing: characterSpacing && px(characterSpacing),
-          lineHeight: lineHeight && px(lineHeight),
-          textTransform: casing !== 'normalcase' ? casing : 'none'
-        };
-
-        return acc;
-      }, { });
-    });
-
-    return merge.all(sets.filter(Boolean));
-  });
-
-  return merge.all<{ [size: string]: TypesettingResult }>(settings);
+): TypesettingResults => {
+  const { family, fallbacks, variants } = typesettings;
+  const fontFamily = getFontStack(family, fallbacks);
+  return variants.reduce(create(fontFamily, styles), { });
 };

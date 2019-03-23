@@ -1,6 +1,6 @@
 const Benchmark = require('benchmark')
 const config = require('../test/fixtures/typesettings')
-const { generateFonts, generateFontFace } = require('../dist/index.cjs.js')
+const { generateFonts, generateFontFace } = require('../dist/index.js')
 
 const suite = new Benchmark.Suite()
 
