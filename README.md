@@ -18,7 +18,7 @@ yarn add typesettings-js
 ```js
 const Typesettings = {
   family: String,
-  fallback: Array<String>,
+  fallbacks: Array<String>,
   variants: Array<{
     fontStyle: 'italic' | 'normal' | 'oblique' | string,
     fontWeight: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 'bold' | 'bolder' | 'normal' | 'lighter',
