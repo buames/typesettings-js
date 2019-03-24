@@ -25,7 +25,7 @@ test('generateFonts()', (t) => {
   t.snapshot(generateFonts(config), 'with fallback family');
 
   // tslint:disable-next-line: max-line-length
-  t.snapshot(generateFonts(config, { styles: { textRendering: 'optimizeLegibility' } }), 'with additional styles');
+  t.snapshot(generateFonts(config, { fontStyles: { textRendering: 'optimizeLegibility' } }), 'with additional styles');
 
   delete config.fallbacks;
   t.snapshot(generateFonts(config), 'without fallback family');
