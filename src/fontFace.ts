@@ -8,10 +8,10 @@ export const generateFontFace = ({ family, variants }: Typesettings): string => 
     }
 
     const srcs = Object.keys(sources).map(key => (
-      Array.isArray(sources[key])
+      sources[key] && (Array.isArray(sources[key])
         ? sources[key].map((n: string) => (`local('${ n }')`))
-        : `url(${ sources[key] }) format('${ FontSourceFormats[key] }')`
-    ));
+        : `url(${ sources[key] }) format('${ FontSourceFormats[key] }')`)
+    )).filter(Boolean);
 
     const face = [
       `font-family: ${ getFamilyName(family) }`,
