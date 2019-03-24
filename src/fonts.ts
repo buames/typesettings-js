@@ -2,7 +2,7 @@ import {
   LetterCasing,
   StyledValue,
   Typesettings,
-  TypesettingFontsOptions,
+  TypesettingOptions,
   TypesettingResults,
   FontVariant,
   FontSetting
@@ -47,7 +47,7 @@ const getTransformLabel = (casing: LetterCasing | string) => (
 */
 export const generateFonts = (
   typesettings: Typesettings,
-  options: TypesettingFontsOptions = { }
+  options: TypesettingOptions = { }
 ): TypesettingResults => {
   const { family, fallbacks, variants } = typesettings;
   const fontFamily = getFontStack(family, fallbacks);
@@ -72,9 +72,9 @@ export const generateFonts = (
           fontWeight,
           fontSize: px(setting.fontSize),
           letterSpacing: setting.letterSpacing && px(setting.letterSpacing),
-          lineHeight: setting.lineHeight && px(setting.lineHeight),
+          lineHeight: setting.lineHeight ? px(setting.lineHeight) : 'initial',
           textTransform: casing !== LetterCasing.normalcase ? casing : 'none',
-          ...options.styles || { }
+          ...options.fontStyles || { }
         };
 
         if (options.cssFn) {

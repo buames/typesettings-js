@@ -27,13 +27,14 @@ export type StyledValue = string | 0 | number;
 
 export type StyledObject = { [property: string]: StyledValue };
 
-export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
-
 export type FontSources = { [K in FontSourceFormats]?: string | string[] | NodeRequireFunction };
 
-export interface TypesettingFontsOptions {
-  styles?: StyledObject;
-  cssFn?: (obj: StyledObject) => any;
+export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
+
+export interface TypesettingOptions {
+  cssFn?: (styles: StyledObject | string) => any;
+  fontStyles?: StyledObject;
+  fontFaceStyles?: StyledObject;
 }
 
 export interface Typesettings {
