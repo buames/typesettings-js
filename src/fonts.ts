@@ -1,13 +1,11 @@
-import { FontFamilyProperty } from 'csstype';
-
 import {
-  AdditionalStyles,
   LetterCasing,
+  StyledValue,
   Typesettings,
-  TypesettingProperty,
+  TypesettingOptions,
   TypesettingResults,
-  TypesettingVariant,
-  TypesettingOptions
+  FontVariant,
+  FontSetting
 } from './types';
 
 import {
@@ -18,7 +16,7 @@ import {
 /*
   Returns a pixel value or the raw css value
 */
-const px = (n: TypesettingProperty) => (
+const px = (n: StyledValue) => (
   typeof n === 'number' && n !== 0 ? `${ n }px` : n
 );
 
@@ -28,7 +26,7 @@ const px = (n: TypesettingProperty) => (
   However, if the weight is a string (ie 'bold'), this returns the prefix + a capitalized
   weight. For example, nBold.
 */
-const getStyleLabel = ({ fontStyle, fontWeight }: TypesettingVariant) => (
+const getStyleLabel = ({ fontStyle, fontWeight }: FontVariant) => (
   `${ fontStyle.charAt(0) }${ typeof fontWeight === 'string'
     ? `${ fontWeight.charAt(0).toUpperCase() }${ fontWeight.slice(1) }`
     : fontWeight }`
@@ -45,48 +43,49 @@ const getTransformLabel = (casing: LetterCasing | string) => (
 );
 
 /*
-  Variant reducer
-*/
-const create = (
-  fontFamily: FontFamilyProperty,
-  styles: AdditionalStyles = { }
-) => (
-  acc: any,
-  variant: TypesettingVariant
-) => {
-  const { fontStyle, fontWeight, sources, ...casings } = variant;
-  const styleLabel = getStyleLabel(variant);
-  Object.keys(casings).forEach((casing) => {
-    const transformLabel = getTransformLabel(casing);
-
-    variant[casing].forEach((setting: TypesettingOptions) => {
-      const sizeLabel = `s${ parseSize(setting.fontSize) }`;
-
-      acc[sizeLabel] = acc[sizeLabel] || { };
-      acc[sizeLabel][`${ styleLabel }${ transformLabel }`] = {
-        fontFamily,
-        fontStyle,
-        fontWeight,
-        fontSize: px(setting.fontSize),
-        letterSpacing: setting.letterSpacing && px(setting.letterSpacing),
-        lineHeight: setting.lineHeight && px(setting.lineHeight),
-        textTransform: casing !== 'normalcase' ? casing : 'none',
-        ...styles
-      };
-    });
-  });
-
-  return acc;
-};
-
-/*
   Generates a map of typesettings
 */
 export const generateFonts = (
   typesettings: Typesettings,
-  styles?: AdditionalStyles
+  options: TypesettingOptions = { }
 ): TypesettingResults => {
   const { family, fallbacks, variants } = typesettings;
   const fontFamily = getFontStack(family, fallbacks);
-  return variants.reduce(create(fontFamily, styles), { });
+
+  const styles: { } = variants.reduce((acc, variant) => {
+    const { fontStyle, fontWeight, sources, ...casings } = variant;
+    const styleLabel = getStyleLabel(variant);
+
+    // Loop over each casing (ie. normalcase, uppercase, lowercase)
+    Object.keys(casings).forEach((casing) => {
+      const transformLabel = getTransformLabel(casing);
+
+      // Now loop over each style object
+      variant[casing].forEach((setting: FontSetting) => {
+        const sizeLabel = `s${ parseSize(setting.fontSize) }`;
+        const weightLabel = `${ styleLabel }${ transformLabel }`;
+
+        acc[sizeLabel] = acc[sizeLabel] || { };
+        acc[sizeLabel][weightLabel] = {
+          fontFamily,
+          fontStyle,
+          fontWeight,
+          fontSize: px(setting.fontSize),
+          letterSpacing: setting.letterSpacing && px(setting.letterSpacing),
+          lineHeight: setting.lineHeight ? px(setting.lineHeight) : 'initial',
+          textTransform: casing !== LetterCasing.normalcase ? casing : 'none',
+          ...options.fontStyles || { }
+        };
+
+        if (options.cssFn) {
+          acc[sizeLabel][weightLabel] = options.cssFn(acc[sizeLabel][weightLabel]);
+        }
+      });
+    });
+
+    return acc;
+  // tslint:disable-next-line: align
+  }, { });
+
+  return styles;
 };

@@ -23,42 +23,47 @@ export enum LetterCasing {
   lowercase = 'lowercase'
 }
 
-export type AdditionalStyles = { [k: string]: TypesettingProperty };
+export type StyledValue = string | 0 | number;
 
-export type TypesettingProperty = string | 0 | number;
+export type StyledObject = { [property: string]: StyledValue };
 
-export type TypesettingResults = { [size: string]: { [weight: string]: TypesettingStyles } };
+export type FontSources = { [K in FontSourceFormats]?: string | string[] | NodeRequireFunction };
 
-export type FontSources = { [K in FontSourceFormats]?: string | string[] };
+export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
+
+export interface TypesettingOptions {
+  cssFn?: (styles: StyledObject | string) => any;
+  fontStyles?: StyledObject;
+  fontFaceStyles?: StyledObject;
+}
 
 export interface Typesettings {
   family: FontFamilyProperty;
   fallbacks?: FontFamilyProperty[];
-  variants?: TypesettingVariant[];
+  variants?: FontVariant[];
 }
 
-export interface TypesettingVariant {
+export interface FontVariant {
   fontWeight?: FontWeightProperty;
   fontStyle?: FontStyleProperty;
   sources?: FontSources;
-  normalcase?: TypesettingOptions[];
-  uppercase?: TypesettingOptions[];
-  lowercase?: TypesettingOptions[];
+  normalcase?: FontSetting[];
+  uppercase?: FontSetting[];
+  lowercase?: FontSetting[];
 }
 
-export interface TypesettingOptions {
-  fontSize: FontSizeProperty<TypesettingProperty>;
-  letterSpacing?: LetterSpacingProperty<TypesettingProperty>;
-  lineHeight?: LineHeightProperty<TypesettingProperty>;
-  leading?: TypesettingProperty;
+export interface FontSetting {
+  fontSize: FontSizeProperty<StyledValue>;
+  letterSpacing?: LetterSpacingProperty<StyledValue> | null;
+  lineHeight?: LineHeightProperty<StyledValue> | null;
 }
 
-export interface TypesettingStyles extends AdditionalStyles {
+export interface StyledFont extends StyledObject {
   fontFamily?: FontFamilyProperty;
   fontStyle?: FontStyleProperty;
-  fontSize?: FontSizeProperty<TypesettingProperty>;
+  fontSize?: FontSizeProperty<StyledValue>;
   fontWeight?: FontWeightProperty;
-  letterSpacing?: LetterSpacingProperty<TypesettingProperty>;
-  lineHeight?: LineHeightProperty<TypesettingProperty>;
+  letterSpacing?: LetterSpacingProperty<StyledValue>;
+  lineHeight?: LineHeightProperty<StyledValue>;
   textTransform?: TextTransformProperty;
 }

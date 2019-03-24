@@ -10,9 +10,14 @@ module.exports = {
       },
       normalcase: [
         {
-          fontSize: 20,
+          fontSize: 14,
           letterSpacing: null,
           lineHeight: 18
+        },
+        {
+          fontSize: 20,
+          letterSpacing: null,
+          lineHeight: 22
         }
       ]
     },

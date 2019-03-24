@@ -19,4 +19,4 @@ suite
     const top = this.filter('fastest').map('name')
     console.log(`Fastest is ${ top }`)
   })
-  .run({ async: true })
+  .run({ async: false })

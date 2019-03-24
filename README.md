@@ -3,6 +3,8 @@ Typesettings
 
 [![npm](https://img.shields.io/npm/v/typesettings-js.svg?style=flat-square)](https://www.npmjs.com/package/typesettings-js)
 [![codecov](https://codecov.io/gh/buames/typesettings-js/branch/master/graph/badge.svg)](https://codecov.io/gh/buames/typesettings-js)
+[![npm](https://img.shields.io/bundlephobia/min/typesettings-js.svg)](https://bundlephobia.com/result?p=typesettings-js)
+[![npm](https://img.shields.io/bundlephobia/minzip/typesettings-js.svg)](https://bundlephobia.com/result?p=typesettings-js)
 </h1>
 
 > Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.
@@ -89,30 +91,71 @@ const Typesettings = {
 }
 ```
 
+## Generate
+
+```sh
+generate(typesettings: Object, options?: Object): Object
+```
+
+Generate a fontFace declaration and an object of styled objects from your typesettings.
+
+```js
+import styled from '@emotion/styled'
+import { Global, css } from '@emotion/core'
+import { generate } from 'typesettings-js'
+import Typesettings from 'your_typesettings'
+
+const options = {
+  cssFn: css,
+  fontFaceStyles: {
+    fontDisplay: 'swap'
+  },
+  fontStyles: {
+    textRendering: 'optimizeLegibility',
+    WebkitFontSmoothing: 'antialiased'
+  }
+}
+
+const { fontFace, fonts } = generate(Typesettings, options)
+
+const TextLabel = styled('p')`
+  ${ fonts.s16.n400 };
+`
+
+render(
+  <div>
+    <Global styles={ fontFace } />
+    <TextLabel>The quick brown fox jumps over the lazy dog.</TextLabel>
+  </div>
+)
+```
+
 ## Generate Fonts
 
 ```sh
-generateFonts(Typesettings: Object, styles?: Object): Object
+generateFonts(typesettings: Object, options?: Object): Object
 ```
 
-Generates a map of typesettings to be used with CSS-in-JS frameworks. By default, `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform` will be return styles. You can pass in an object of styles that will be added to these.
+Generate styled objects to be used with CSS-in-JS frameworks from your typesettings. By default, `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform` will be return styles. You can pass in an object of styles that will be added to these.
 
 **Example**
 
 ```js
-import { styled } from '@emotion/core'
+import styled from '@emotion/styled'
 import { generateFonts } from 'typesettings-js'
 import Typesettings from 'your_typesettings'
 
-const styles = {
-  textRendering: 'optimizeLegibility',
-  WebkitFontSmoothing: 'antialiased'
+const options = {
+  fontStyles: {
+    textRendering: 'optimizeLegibility',
+    WebkitFontSmoothing: 'antialiased'
+  }
 }
 
-const fonts = generateFonts(Typesettings, styles)
+const fonts = generateFonts(Typesettings, options)
 
 /*
-  Outputs an object like this:
+  Outputs an object of styled objects:
   {
     s10: {
       n400: { ... },
@@ -138,10 +181,56 @@ render(
 )
 ```
 
+If you'd prefer to have objects of classnames, add a `cssFn` in the options.
+
+```js
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
+import { generateFonts } from 'typesettings-js'
+import Typesettings from 'your_typesettings'
+
+const options = {
+  cssFn: css,
+  fontStyles: {
+    textRendering: 'optimizeLegibility',
+    WebkitFontSmoothing: 'antialiased'
+  }
+}
+
+const fonts = generateFonts(Typesettings, options)
+
+/*
+  Outputs an object  of classnames:
+  {
+    s10: {
+      n400: classname,
+      n400_caps: classname,
+      i700: classname,
+      i700_caps: classname
+      ...
+    },
+    s11: {
+      ...
+    }
+  }
+*/
+
+const Paragraph = styled('p')`
+  ${ fonts.s16.n400 };
+`
+
+render(
+  <Paragraph>
+    My font size is 16 and my font weight is regular.
+  </Paragraph>
+)
+```
+
+
 ## Generate Font Face
 
 ```sh
-generateFontFace(Typesettings: Object): String
+generateFontFace(typesettings: Object, options?: Object): String
 ```
 
 Generates a @font-face css declariation from typesettings.
@@ -149,18 +238,22 @@ Generates a @font-face css declariation from typesettings.
 **Example**
 
 ```js
-import { Globals } from '@emotion/core'
+import { Global, css } from '@emotion/core'
 import { generateFontFace } from 'typesettings-js'
 import Typesettings from 'your_typesettings'
 
-const fontFace = generateFontFace(Typesettings)
+const options = {
+  cssFn: css,
+  fontFaceStyles: {
+    fontDisplay: 'swap'
+  }
+}
+
+const fontFace = generateFontFace(Typesettings, options)
 
 render(
   <div>
-    <Global styles={ css`
-        ${ fontFace };
-        ...
-      `}
+    <Global styles={ fontFace }
     />
   </div>
 )
