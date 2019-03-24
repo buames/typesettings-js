@@ -5,20 +5,10 @@ import { generateFonts } from './fonts';
 export const generate = (
   typesettings: Typesettings,
   options?: TypesettingOptions
-): { fontFace: string, fonts: TypesettingResults } => {
-  const fontFace = generateFontFace(typesettings, {
-    cssFn: options.cssFn,
-    fontFaceStyles: options.fontFaceStyles
-  });
-
-  const fonts = generateFonts(typesettings, {
-    cssFn: options.cssFn,
-    fontStyles: options.fontStyles
-  });
-
-  return { fontFace, fonts };
-};
+): { fontFace: string, fonts: TypesettingResults } => ({
+  fontFace: generateFontFace(typesettings, options),
+  fonts: generateFonts(typesettings, options)
+});
 
 export * from './types';
-export * from './fontFace';
-export * from './fonts';
+export { generateFontFace, generateFonts };
