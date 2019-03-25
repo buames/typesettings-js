@@ -1,21 +1,34 @@
-<h1 align="center">
-Typesettings
+
+# Typesettings
+
+Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.
 
 [![npm](https://img.shields.io/npm/v/typesettings-js.svg?style=flat-square)](https://www.npmjs.com/package/typesettings-js)
 [![codecov](https://codecov.io/gh/buames/typesettings-js/branch/master/graph/badge.svg)](https://codecov.io/gh/buames/typesettings-js)
 [![npm](https://img.shields.io/bundlephobia/min/typesettings-js.svg)](https://bundlephobia.com/result?p=typesettings-js)
 [![npm](https://img.shields.io/bundlephobia/minzip/typesettings-js.svg)](https://bundlephobia.com/result?p=typesettings-js)
-</h1>
 
-> Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.
-
-## Install
+#### Install
 
 ```sh
 yarn add typesettings-js
 ```
 
+#### Contents
+
+- [Typesettings](#typesettings)
+- [Configuration](#configuration)
+  - [Class Names](#class-names)
+  - [Additional Font Styles](#additional-font-styles)
+  - [Additional Font Face Styles](#additional-font-face-styles)
+- [API](#api)
+  - [generate()](#generate())
+  - [generateFonts()](#generateFonts())
+  - [generateFontFace()](#generateFontFace())
+
 ## Typesettings
+
+The first you'll want to do is create your typesettings object. This will be used to create your styled (font) objects as well as a `@font-face` declaration.
 
 ```js
 const Typesettings = {
@@ -91,10 +104,63 @@ const Typesettings = {
 }
 ```
 
-## Generate
 
-```sh
-generate(typesettings: Object, options?: Object): Object
+## Configuration
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|:----------|
+[`cssFn`](#class-names) |  `Function` | `undefined` | Returns font styles as css classnames instead of styled objects
+[`fontStyles`](#additional-font-styles) | `Object`  | `undefined` | Additional styles that apply to all font styles
+[`fontFaceStyles`](#additional-font-face-styles) | `Object`  | `undefined` | Additional styles that apply the @font-face declaration
+
+### Class Names
+
+By default, `fonts` styles are returned as object styles while the `fontFace` declaration is returned as a string. If you prefer, you can set the `cssFn` option and css classnames will be returned instead.
+
+```js
+import { css } from '@emotion/core'
+
+const options = {
+  cssFn: css
+}
+```
+
+### Additional Font Styles
+
+The `fonts` object will return styles for `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform`. You can pass in an object of styles that will be added to these using the `fontStyles` option.
+
+```js
+const options = {
+  fontStyles: {
+    textRendering: 'optimizeLegibility',
+    WebkitFontSmoothing: 'antialiased',
+    // and so on ...
+  }
+}
+```
+
+### Additional Font Face Styles
+
+The `fontFace` declaration will return styles for `font-family`, `font-style`, and `font-weight`. You can pass in an object of styles that will be added to these using the `fontFaceStyles` option.
+
+```js
+const options = {
+  fontFaceStyles: {
+    fontDisplay: 'swap',
+    // and so on ...
+  }
+}
+```
+
+## API
+
+### generate()
+
+```js
+generate: (typesettings: Object, options?: Object) => {
+  fontFace: String,
+  fonts: Object
+}
 ```
 
 Generate a fontFace declaration and an object of styled objects from your typesettings.
@@ -130,10 +196,10 @@ render(
 )
 ```
 
-## Generate Fonts
+### generateFonts()
 
-```sh
-generateFonts(typesettings: Object, options?: Object): Object
+```js
+generateFonts: (typesettings: Object, options?: Object) => Object
 ```
 
 Generate styled objects to be used with CSS-in-JS frameworks from your typesettings. By default, `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform` will be return styles. You can pass in an object of styles that will be added to these.
@@ -226,11 +292,10 @@ render(
 )
 ```
 
+### generateFontFace()
 
-## Generate Font Face
-
-```sh
-generateFontFace(typesettings: Object, options?: Object): String
+```js
+generateFontFace: (typesettings: Object, options?: Object) => Object
 ```
 
 Generates a @font-face css declariation from typesettings.
@@ -257,4 +322,22 @@ render(
     />
   </div>
 )
+```
+
+## Utilities
+
+### getFamilyName()
+
+ Returns a normalized FontFamily name where names with a space are automatically wrapped in quotes.
+
+```js
+getFamilyName: (family: String) => string
+```
+
+### getFontStack()
+
+Normalizes the family name and all fallbacks, combining them into a font stack.
+
+```js
+getFamilyName: (family: String, fallbacks: String[]) => string
 ```
