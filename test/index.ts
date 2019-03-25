@@ -32,7 +32,7 @@ test('generateFonts()', (t) => {
 });
 
 test('config options', (t) => {
-  const conf = opts => ({
+  const fn = opts => ({
     family: 'Helvetica Neue',
     fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
     variants: [
@@ -59,5 +59,5 @@ test('config options', (t) => {
     ]
   });
 
-  t.snapshot(generateFontFace(conf({ woff: false })), 'without woff');
+  t.snapshot(generateFontFace(fn({ woff: false })), 'without woff');
 });

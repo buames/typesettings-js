@@ -14,7 +14,7 @@ export enum FontSourceFormats {
   woff2 = 'woff2',
   woff = 'woff',
   ttf = 'ttf',
-  eot = 'eot'
+  eot = 'embedded-opentype'
 }
 
 export enum LetterCasing {
