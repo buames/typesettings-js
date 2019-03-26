@@ -14,6 +14,7 @@ export enum FontSourceFormats {
   woff2 = 'woff2',
   woff = 'woff',
   ttf = 'ttf',
+  otf = 'opentype',
   eot = 'embedded-opentype'
 }
 
