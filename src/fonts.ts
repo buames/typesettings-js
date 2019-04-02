@@ -27,7 +27,7 @@ const px = (n: StyledValue) => (
   weight. For example, nBold.
 */
 const getStyleLabel = ({ fontStyle, fontWeight }: FontVariant) => (
-  `${ fontStyle.charAt(0) }${ typeof fontWeight === 'string'
+  `${ fontStyle && fontStyle.charAt(0) || '' }${ typeof fontWeight === 'string'
     ? `${ fontWeight.charAt(0).toUpperCase() }${ fontWeight.slice(1) }`
     : fontWeight }`
 );
@@ -50,8 +50,12 @@ export const generateFonts = (
   options: TypesettingOptions = { }
 ): TypesettingResults => {
   const { family, fallbacks, variants } = typesettings;
-  const fontFamily = getFontStack(family, fallbacks);
 
+  if (!variants) {
+    throw Error('Missing variants in your typesettings');
+  }
+
+  const fontFamily = getFontStack(family, fallbacks);
   const styles: { } = variants.reduce((acc, variant) => {
     const { fontStyle, fontWeight, sources, ...casings } = variant;
     const styleLabel = getStyleLabel(variant);

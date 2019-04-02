@@ -22,7 +22,6 @@ module.exports = {
       ]
     },
     {
-      fontStyle: 'normal',
       fontWeight: 500,
       sources: {
         locals: ['Helvetica Medium', 'Helvetica-Medium'],

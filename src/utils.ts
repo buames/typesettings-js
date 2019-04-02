@@ -1,4 +1,5 @@
 import { FontFamilyProperty } from 'csstype';
+import { StyledValue } from './types';
 
 /*
   Returns a normalized FontFamily name where names with
@@ -11,7 +12,7 @@ export const getFamilyName = (family: FontFamilyProperty) => (
 /*
   Returns the font stack
 */
-export const getFontStack = (family: FontFamilyProperty, fallbacks: FontFamilyProperty[]) => ([
+export const getFontStack = (family: FontFamilyProperty, fallbacks?: FontFamilyProperty[]) => ([
   getFamilyName(family),
   fallbacks && fallbacks.map(getFamilyName)
 ].filter(Boolean).join(', '));
@@ -19,6 +20,9 @@ export const getFontStack = (family: FontFamilyProperty, fallbacks: FontFamilyPr
 /*
   Parses a number and unit string and returns the size
 */
-export const parseSize = (str: string | number) => (
-  typeof str === 'string' ? str.trim().match(/([\d.\-+]*)\s*(.*)/)[1] : str
-);
+export const parseSize = (str: StyledValue) => {
+  if (typeof str !== 'string') return str;
+
+  const match = str.trim().match(/([\d.\-+]*)\s*(.*)/);
+  return match && match[1] || str;
+};

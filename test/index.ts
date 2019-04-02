@@ -12,11 +12,20 @@ test('generateFontFace()', (t) => {
 });
 
 test('generateFontFace(): Should throw error when there are no file sources.', (t) => {
-  const error = t.throws(() => {
-    delete config.variants[0].sources;
-    return generateFontFace(config);
-  // tslint:disable-next-line: align
-  }, Error);
+  const a = {
+    family: 'Helvetica Neue',
+    fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
+    variants: [
+      {
+        fontWeight: 400,
+        normalcase: [{
+          fontSize: 12
+        }]
+      }
+    ]
+  };
+
+  const error = t.throws(() => (generateFontFace(a)), Error);
 
   t.is(error.message, 'Missing font file sources');
 });

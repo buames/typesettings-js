@@ -6,6 +6,11 @@ export const generateFontFace = (
   options: TypesettingOptions = { }
 ): string => {
   const { family, variants } = typesettings;
+
+  if (!variants) {
+    throw Error('Missing variants in your typesettings');
+  }
+
   const declaration = variants.map(({ sources, fontStyle, fontWeight }) => {
     if (!sources || (sources && Object.keys(sources).length === 0)) {
       throw Error('Missing font file sources');
