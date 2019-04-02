@@ -7,15 +7,7 @@ export const generateFontFace = (
 ): string => {
   const { family, variants } = typesettings;
 
-  if (!Array.isArray(variants)) {
-    return '';
-  }
-
   const declaration = variants.map(({ sources, fontStyle, fontWeight }) => {
-    if (!sources || (sources && Object.keys(sources).length === 0)) {
-      return '';
-    }
-
     const srcs = Object.keys(sources).map(key => (
       sources[key] && (Array.isArray(sources[key])
         ? sources[key].map((n: string) => (`local('${ n }')`))

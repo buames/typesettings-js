@@ -50,11 +50,6 @@ export const generateFonts = (
   options: TypesettingOptions = { }
 ): TypesettingResults => {
   const { family, fallbacks, variants } = typesettings;
-
-  if (!Array.isArray(variants)) {
-    return {};
-  }
-
   const fontFamily = getFontStack(family, fallbacks);
 
   const styles: { } = variants.reduce((acc, variant) => {
