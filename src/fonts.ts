@@ -51,11 +51,12 @@ export const generateFonts = (
 ): TypesettingResults => {
   const { family, fallbacks, variants } = typesettings;
 
-  if (!variants) {
-    throw Error('Missing variants in your typesettings');
+  if (!Array.isArray(variants)) {
+    return {};
   }
 
   const fontFamily = getFontStack(family, fallbacks);
+
   const styles: { } = variants.reduce((acc, variant) => {
     const { fontStyle, fontWeight, sources, ...casings } = variant;
     const styleLabel = getStyleLabel(variant);

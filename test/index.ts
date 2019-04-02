@@ -11,25 +11,6 @@ test('generateFontFace()', (t) => {
   t.snapshot(generateFontFace(b), 'without fontFamily wrapped in quotes');
 });
 
-test('generateFontFace(): Should throw error when there are no file sources.', (t) => {
-  const a = {
-    family: 'Helvetica Neue',
-    fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
-    variants: [
-      {
-        fontWeight: 400,
-        normalcase: [{
-          fontSize: 12
-        }]
-      }
-    ]
-  };
-
-  const error = t.throws(() => (generateFontFace(a)), Error);
-
-  t.is(error.message, 'Missing font file sources');
-});
-
 test('generateFonts()', (t) => {
   t.snapshot(generateFonts(config), 'with fallback family');
 

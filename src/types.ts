@@ -33,6 +33,7 @@ export type FontSources = { [K in FontSourceFormats]?: string | string[] | NodeR
 export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
 
 export interface TypesettingOptions {
+  [k: string]: any;
   cssFn?: (styles: StyledObject | string) => any;
   fontStyles?: StyledObject;
   fontFaceStyles?: StyledObject;
@@ -40,14 +41,14 @@ export interface TypesettingOptions {
 
 export interface Typesettings {
   family: FontFamilyProperty;
+  variants: FontVariant[];
   fallbacks?: FontFamilyProperty[];
-  variants?: FontVariant[];
 }
 
 export interface FontVariant {
-  fontWeight?: FontWeightProperty;
-  fontStyle?: FontStyleProperty;
-  sources?: FontSources;
+  fontStyle: FontStyleProperty;
+  fontWeight: FontWeightProperty;
+  sources: FontSources;
   normalcase?: FontSetting[];
   uppercase?: FontSetting[];
   lowercase?: FontSetting[];

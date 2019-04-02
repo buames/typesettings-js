@@ -7,13 +7,13 @@ export const generateFontFace = (
 ): string => {
   const { family, variants } = typesettings;
 
-  if (!variants) {
-    throw Error('Missing variants in your typesettings');
+  if (!Array.isArray(variants)) {
+    return '';
   }
 
   const declaration = variants.map(({ sources, fontStyle, fontWeight }) => {
     if (!sources || (sources && Object.keys(sources).length === 0)) {
-      throw Error('Missing font file sources');
+      return '';
     }
 
     const srcs = Object.keys(sources).map(key => (
