@@ -1,6 +1,6 @@
 import test from 'ava';
 import typesettings from './fixtures/typesettings';
-import { generateFonts, generateFontFace, Typesettings } from '../src';
+import { generateFonts, generateFontFace, Typesettings, TypesettingOptions } from '../src';
 
 const config = typesettings as Typesettings;
 
@@ -22,7 +22,7 @@ test('generateFonts()', (t) => {
 });
 
 test('config options', (t) => {
-  const fn = opts => ({
+  const fn = (opts: TypesettingOptions) => ({
     family: 'Helvetica Neue',
     fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
     variants: [
