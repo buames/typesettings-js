@@ -1,6 +1,6 @@
 import test from 'ava';
 import typesettings from './fixtures/typesettings';
-import { generateFonts, generateFontFace, Typesettings } from '../src';
+import { generateFonts, generateFontFace, Typesettings, TypesettingOptions } from '../src';
 
 const config = typesettings as Typesettings;
 
@@ -9,16 +9,6 @@ test('generateFontFace()', (t) => {
 
   const b = { ...config, family: 'Helvetica' };
   t.snapshot(generateFontFace(b), 'without fontFamily wrapped in quotes');
-});
-
-test('generateFontFace(): Should throw error when there are no file sources.', (t) => {
-  const error = t.throws(() => {
-    delete config.variants[0].sources;
-    return generateFontFace(config);
-  // tslint:disable-next-line: align
-  }, Error);
-
-  t.is(error.message, 'Missing font file sources');
 });
 
 test('generateFonts()', (t) => {
@@ -32,7 +22,7 @@ test('generateFonts()', (t) => {
 });
 
 test('config options', (t) => {
-  const fn = opts => ({
+  const fn = (opts: TypesettingOptions) => ({
     family: 'Helvetica Neue',
     fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
     variants: [

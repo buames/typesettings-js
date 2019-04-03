@@ -27,7 +27,7 @@ const px = (n: StyledValue) => (
   weight. For example, nBold.
 */
 const getStyleLabel = ({ fontStyle, fontWeight }: FontVariant) => (
-  `${ fontStyle.charAt(0) }${ typeof fontWeight === 'string'
+  `${ fontStyle && fontStyle.charAt(0) || '' }${ typeof fontWeight === 'string'
     ? `${ fontWeight.charAt(0).toUpperCase() }${ fontWeight.slice(1) }`
     : fontWeight }`
 );

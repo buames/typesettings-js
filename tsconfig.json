@@ -11,7 +11,7 @@
     "noImplicitAny": false,
     "noImplicitThis": true,
     "strict": false,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "strictFunctionTypes": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,

@@ -24,15 +24,16 @@ export enum LetterCasing {
   lowercase = 'lowercase'
 }
 
-export type StyledValue = string | 0 | number;
+export type StyledValue = string | number | undefined;
 
 export type StyledObject = { [property: string]: StyledValue };
 
-export type FontSources = { [K in FontSourceFormats]?: string | string[] | NodeRequireFunction };
+export type FontSources = { [K in FontSourceFormats]?: string | string[] | NodeRequireFunction | false };
 
 export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
 
 export interface TypesettingOptions {
+  [k: string]: any;
   cssFn?: (styles: StyledObject | string) => any;
   fontStyles?: StyledObject;
   fontFaceStyles?: StyledObject;
@@ -40,14 +41,14 @@ export interface TypesettingOptions {
 
 export interface Typesettings {
   family: FontFamilyProperty;
+  variants: FontVariant[];
   fallbacks?: FontFamilyProperty[];
-  variants?: FontVariant[];
 }
 
 export interface FontVariant {
-  fontWeight?: FontWeightProperty;
-  fontStyle?: FontStyleProperty;
-  sources?: FontSources;
+  fontStyle: FontStyleProperty;
+  fontWeight: FontWeightProperty;
+  sources: FontSources;
   normalcase?: FontSetting[];
   uppercase?: FontSetting[];
   lowercase?: FontSetting[];
@@ -60,7 +61,7 @@ export interface FontSetting {
 }
 
 export interface StyledFont extends StyledObject {
-  fontFamily?: FontFamilyProperty;
+  fontFamily: FontFamilyProperty;
   fontStyle?: FontStyleProperty;
   fontSize?: FontSizeProperty<StyledValue>;
   fontWeight?: FontWeightProperty;

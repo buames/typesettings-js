@@ -46,9 +46,9 @@ const Typesettings = {
     },
     ['normalcase' | 'uppercase' | 'lowercase']: [
       {
-        fontSize: String | 0 | Number,
-        letterSpacing: String | 0 | Number | null,
-        lineHeight: String | 0 | Number | null
+        fontSize: String | Number,
+        letterSpacing: String | Number | null,
+        lineHeight: String | Number | null
       }
       ...
     ]
