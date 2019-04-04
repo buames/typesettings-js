@@ -56,8 +56,8 @@ export interface FontVariant {
 
 export interface FontSetting {
   fontSize: FontSizeProperty<StyledValue>;
-  letterSpacing?: LetterSpacingProperty<StyledValue> | null;
-  lineHeight?: LineHeightProperty<StyledValue> | null;
+  letterSpacing?: LetterSpacingProperty<StyledValue>;
+  lineHeight?: LineHeightProperty<StyledValue>;
 }
 
 export interface StyledFont extends StyledObject {
