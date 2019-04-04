@@ -24,11 +24,11 @@ export enum LetterCasing {
   lowercase = 'lowercase'
 }
 
-export type StyledValue = string | number | undefined;
+export type StyledValue = string | number | undefined | null;
 
 export type StyledObject = { [property: string]: StyledValue };
 
-export type FontSources = { [K in FontSourceFormats]?: string | string[] | NodeRequireFunction | false };
+export type FontSources = { [K in keyof typeof FontSourceFormats]?: string | string[] | NodeRequireFunction | false };
 
 export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
 
@@ -64,8 +64,8 @@ export interface StyledFont extends StyledObject {
   fontFamily: FontFamilyProperty;
   fontStyle?: FontStyleProperty;
   fontSize?: FontSizeProperty<StyledValue>;
-  fontWeight?: FontWeightProperty;
+  fontWeight?: FontWeightProperty | string;
   letterSpacing?: LetterSpacingProperty<StyledValue>;
   lineHeight?: LineHeightProperty<StyledValue>;
-  textTransform?: TextTransformProperty;
+  textTransform?: TextTransformProperty | string;
 }
