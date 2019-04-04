@@ -1,5 +1,6 @@
 /* tslint:disable max-line-length */
 import test from 'ava';
+import { css, SerializedStyles } from '@emotion/core';
 import create from './fixtures/a';
 
 test('generateFontFace()', (t) => {
@@ -14,6 +15,9 @@ test('generateFontFace()', (t) => {
 
   const d = create({ eot: false, woff: false, woff2: false, ttf: false });
   t.snapshot(d.fontFace, 'Returns a font-face declaration with only local sources');
+
+  const e = create({ cssFn: css });
+  t.snapshot(e.fontFace, 'Returns a font-face declaration using cssFn');
 });
 
 test('generateFonts()', (t) => {
@@ -25,6 +29,9 @@ test('generateFonts()', (t) => {
 
   const c = create({ fontStyles: { textRendering: 'optimizeLegibility' } });
   t.snapshot(c.fonts, 'Returns a font styled object with additional styles');
+
+  const d = create({ cssFn: css });
+  t.snapshot(d.fonts, 'Returns a font styled object using cssFn');
 });
 
 test('Should return a string', (t) => {

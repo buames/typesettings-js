@@ -1,3 +1,4 @@
+import { SerializedStyles } from '@emotion/core';
 import {
   Typesettings,
   TypesettingOptions,
@@ -5,7 +6,7 @@ import {
   generateFontFace
 } from '../../src';
 
-interface Options extends TypesettingOptions {
+interface Options extends TypesettingOptions<SerializedStyles> {
   eot?: boolean;
   woff?: boolean;
   woff2?: boolean;

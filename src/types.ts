@@ -32,9 +32,9 @@ export type FontSources = { [K in keyof typeof FontSourceFormats]?: string | str
 
 export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
 
-export interface TypesettingOptions {
+export interface TypesettingOptions<CssFnResult = any> {
   [k: string]: any;
-  cssFn?: (styles: StyledObject | string) => any;
+  cssFn?: (styles: StyledObject | string) => CssFnResult;
   fontStyles?: StyledObject;
   fontFaceStyles?: StyledObject;
 }
