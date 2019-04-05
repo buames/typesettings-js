@@ -24,17 +24,17 @@ export enum LetterCasing {
   lowercase = 'lowercase'
 }
 
-export type StyledValue = string | number | undefined;
+export type StyledValue = string | number | undefined | null;
 
 export type StyledObject = { [property: string]: StyledValue };
 
-export type FontSources = { [K in FontSourceFormats]?: string | string[] | NodeRequireFunction | false };
+export type FontSources = { [K in keyof typeof FontSourceFormats]?: string | string[] | NodeRequireFunction | false };
 
 export type TypesettingResults = { [size: string]: { [weight: string]: StyledFont } };
 
-export interface TypesettingOptions {
+export interface TypesettingOptions<CssFnResult = any> {
   [k: string]: any;
-  cssFn?: (styles: StyledObject | string) => any;
+  cssFn?: (styles: StyledObject | string) => CssFnResult;
   fontStyles?: StyledObject;
   fontFaceStyles?: StyledObject;
 }
@@ -56,16 +56,16 @@ export interface FontVariant {
 
 export interface FontSetting {
   fontSize: FontSizeProperty<StyledValue>;
-  letterSpacing?: LetterSpacingProperty<StyledValue> | null;
-  lineHeight?: LineHeightProperty<StyledValue> | null;
+  letterSpacing?: LetterSpacingProperty<StyledValue>;
+  lineHeight?: LineHeightProperty<StyledValue>;
 }
 
 export interface StyledFont extends StyledObject {
   fontFamily: FontFamilyProperty;
   fontStyle?: FontStyleProperty;
   fontSize?: FontSizeProperty<StyledValue>;
-  fontWeight?: FontWeightProperty;
+  fontWeight?: FontWeightProperty | string;
   letterSpacing?: LetterSpacingProperty<StyledValue>;
   lineHeight?: LineHeightProperty<StyledValue>;
-  textTransform?: TextTransformProperty;
+  textTransform?: TextTransformProperty | string;
 }

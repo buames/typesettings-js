@@ -14,15 +14,21 @@ export const generateFontFace = (
         : `url(${ sources[key] }) format('${ FontSourceFormats[key] }')`)
     )).filter(Boolean);
 
-    const face = [
-      `font-family: ${ getFamilyName(family) }`,
-      fontStyle && `font-style: ${ fontStyle }`,
-      fontWeight && `font-weight: ${ fontWeight }`,
-      srcs && `src: ${ srcs.join(', ') };`,
-      options.fontFaceStyles
-    ].filter(Boolean);
+    const styles = {
+      fontStyle,
+      fontWeight,
+      fontFamily: getFamilyName(family),
+      src: srcs.join(', '),
+      ...options.fontFaceStyles
+    };
 
-    return `@font-face { ${ face.join('; ') } }`;
+    const face =  Object.entries(styles).reduce((acc, [key, value]) => {
+      const propName = key.replace(/([A-Z])/g, (match => `-${ match[0].toLowerCase() }`));
+      return `${acc}${propName}: ${value};`;
+    // tslint:disable-next-line: align
+    }, '');
+
+    return `@font-face { ${ face } }`;
   });
 
   const fontFace = declaration.join(' ');
