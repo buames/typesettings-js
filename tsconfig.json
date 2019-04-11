@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "rootDir": "src",
+    "outDir": "dist",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "declaration": true,
-    "declarationDir": "./dist/gen-types",
+    "declarationDir": "./dist",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
@@ -17,8 +19,8 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/csstypes"
+      "node_modules/@types",
+      "node_modules/csstype"
     ]
   },
   "include": [
