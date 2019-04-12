@@ -18,9 +18,10 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "types": "yarn dts-bundle-generator -o ./dist/index.d.ts ./dist/gen-types/index.d.ts",
-    "pretest": "yarn run eslint --ext .ts src",
-    "posttest": "nyc report --reporter=json > coverage/coverage.json",
+    "cover": "nyc report --reporter=html --reporter=lcov > coverage.lcov",
+    "codecov": "nyc report --reporter=html --reporter=lcov > coverage.lcov && npx codecov",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' nyc ava",
+    "lint": "yarn run eslint --ext .ts src",
     "prepare": "yarn run -s build"
   },
   "dependencies": {
