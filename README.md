@@ -25,6 +25,10 @@ yarn add typesettings-js
   - [generate()](#generate())
   - [generateFonts()](#generateFonts())
   - [generateFontFace()](#generateFontFace())
+  - [Utilities](#utilities)
+    - [getValue()](#getValue)
+    - [getFontStack()](#getFontStack)
+    - [normalizeFamily()](#normalizeFamily)
 - [Typescript](#typescript)
 
 ## Typesettings
@@ -106,7 +110,6 @@ const Typesettings = {
 }
 ```
 
-
 ## Configuration
 
 |Name|Type|Default|Description|
@@ -135,7 +138,7 @@ The `fonts` object will return styles for `font-family`, `font-size`, `font-styl
 const options = {
   fontStyles: {
     textRendering: 'optimizeLegibility',
-    WebkitFontSmoothing: 'antialiased',
+    fontFeatureSettings: '"tnum", "liga"',
     // and so on ...
   }
 }
@@ -328,12 +331,12 @@ render(
 
 ## Utilities
 
-### getFamilyName()
+### getValue()
 
- Returns a normalized FontFamily name where names with a space are automatically wrapped in quotes.
+Returns a value from a given Typesettings obj and a path to the key
 
 ```js
-getFamilyName: (family: String) => String
+getFamilyName: (family: String, fallbacks: String[]) => String
 ```
 
 ### getFontStack()
@@ -344,23 +347,40 @@ Normalizes the family name and all fallbacks, combining them into a font stack.
 getFamilyName: (family: String, fallbacks: String[]) => String
 ```
 
+### normalizeFamily()
+
+ Returns a normalized FontFamily name where names with a space are automatically wrapped in quotes.
+
+```js
+getFamilyName: (family: String) => String
+```
+
 ## Typescript
 
 Typescript types and interfaces are exported. You can import them as named imports. See all the type definitions in the [src/types.ts](./src/types.ts) file.
 
-Example extending the `options` parameter while typing the return value of the `cssFn` option.
+Example typing and extending typesetting `options`.
 
 ```jsx
 // foo.ts
-import { SerializedStyles } from '@emotion/core'
+import { Interpolation, SerializedStyles } from '@emotion/core';
 import {
   generate,
+  FontStyles,
+  FontFaceStyles,
   Typesettings,
   TypesettingOptions
 } from 'typesettings-js';
 
-// when passing in a cssFn, it must return a type of `SerializedStyles`
-interface MyOptions extends TypesettingOptions<SerializedStyles> {
+type CssFn = (...args: Interpolation[]) => SerializedStyles;
+
+interface ExtendedFontStyles extends FontStyles { }
+
+interface ExtendedFontFaceStyles extends FontFaceStyles {
+  WebkitFontSmoothing: string;
+}
+
+interface MyOptions extends TypesettingOptions<CssFn, ExtendedFontStyles, ExtendedFontFaceStyles> {
   family: 'Helvetica' | 'Menlo';
 }
 
@@ -380,8 +400,13 @@ import { HelveticaOrMenlo } from 'path/to/foo'
 const { fonts } = HelveticaOrMenlo({
   cssFn: css,
   fontStyles: {
-    textRendering: 'optimizeLegibility'
+    textRendering: 'optimizeLegibility',
+    WebkitFontSmoothing: 'antialiased'
   },
   family: 'Helvetica'
+})
+
+const { fonts } = HelveticaOrMenlo({
+  cssFn: (() => void) // error
 })
 ```

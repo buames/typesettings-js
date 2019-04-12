@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "rootDir": "src",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -10,6 +11,7 @@
     "esModuleInterop": true,
     "noImplicitAny": false,
     "noImplicitThis": true,
+    "sourceMap": true,
     "strict": false,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -17,8 +19,8 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/csstypes"
+      "node_modules/@types",
+      "node_modules/csstype"
     ]
   },
   "include": [
