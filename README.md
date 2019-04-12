@@ -3,10 +3,11 @@
 
 Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.
 
-[![npm](https://img.shields.io/npm/v/typesettings-js.svg?style=flat-square)](https://www.npmjs.com/package/typesettings-js)
+[![Build Status](https://travis-ci.com/buames/typesettings-js.svg?branch=master)](https://travis-ci.com/buames/typesettings-js)
 [![codecov](https://codecov.io/gh/buames/typesettings-js/branch/master/graph/badge.svg)](https://codecov.io/gh/buames/typesettings-js)
-[![npm](https://img.shields.io/bundlephobia/min/typesettings-js.svg)](https://bundlephobia.com/result?p=typesettings-js)
-[![npm](https://img.shields.io/bundlephobia/minzip/typesettings-js.svg)](https://bundlephobia.com/result?p=typesettings-js)
+[![npm](https://img.shields.io/npm/v/typesettings-js.svg?color="black")](https://www.npmjs.com/package/typesettings-js)
+[![npm](https://img.shields.io/bundlephobia/min/typesettings-js.svg?color="black")](https://bundlephobia.com/result?p=typesettings-js)
+[![npm](https://img.shields.io/bundlephobia/minzip/typesettings-js.svg?color="black")](https://bundlephobia.com/result?p=typesettings-js)
 
 #### Install
 
