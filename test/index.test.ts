@@ -9,7 +9,7 @@ import {
   FontStyles,
   FontFaceStyles,
   StyledValue,
-} from '../dist';
+} from '../src';
 
 type CssFn = (...args: Interpolation[]) => SerializedStyles;
 
