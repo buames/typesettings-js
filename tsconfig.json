@@ -19,8 +19,7 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "typeRoots": [
-      "node_modules/@types",
-      "node_modules/csstype"
+      "node_modules/@types"
     ]
   },
   "include": [

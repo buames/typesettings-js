@@ -1,50 +1,56 @@
 /* eslint-disable no-nested-ternary */
 import {
-  CssFn,
-  FontCasingTypes,
-  FontSourceTypes,
-  FontFaceStyles,
-  FontSources,
-  FontStyles,
-  FontSetting,
-  FontVariant,
-  StyledValue,
-  Typesettings,
-  TypesettingOptions,
-  TypesettingResults,
+  getFontStack,
+  getValue,
+  normalizeFamily,
   px,
   parseSize,
-  getFontStack,
-  getValue,
-  normalizeFamily,
 } from './utils';
-
-export {
-  CssFn,
+import {
+  FontFaceOptions,
+  FontStyleOptions,
   FontCasingTypes,
   FontSourceTypes,
-  FontFaceStyles,
   FontSources,
-  FontStyles,
   FontSetting,
   FontVariant,
+  StyledCssFn,
   StyledValue,
+  StyledObject,
   Typesettings,
   TypesettingOptions,
-  TypesettingResults,
-  parseSize,
+  TypesettingsFontsResult,
+  TypesettingsFontFaceResult,
+} from './types';
+
+export {
+  FontFaceOptions,
+  FontStyleOptions,
+  FontCasingTypes,
+  FontSourceTypes,
+  FontSources,
+  FontSetting,
+  FontVariant,
+  StyledCssFn,
+  StyledValue,
+  StyledObject,
+  Typesettings,
+  TypesettingOptions,
+  TypesettingsFontsResult,
+  TypesettingsFontFaceResult,
   getFontStack,
   getValue,
   normalizeFamily,
+  parseSize,
 };
 
-/*
-  Generates a map of typesettings
-*/
-export const generateFonts = (
+/**
+  * Generate font styles from a typesettings obj
+* */
+export const generateFonts = <T>(
   typesettings: Typesettings,
-  options: TypesettingOptions = { },
-): TypesettingResults => {
+  options: TypesettingOptions<T> = { },
+): TypesettingsFontsResult<T> => {
   /*
     Returns a weight property label‚ prefixed with 'n' for normal, 'i' for italics,
     and 'o' for oblique. For example, n700 equals 'normal' with a weight of '700'.
@@ -72,8 +78,12 @@ export const generateFonts = (
 
   const styles = variants.reduce((acc, variant) => {
     const {
-      fontStyle, fontWeight, sources, ...casings
+      fontStyle,
+      fontWeight,
+      sources,
+      ...casings
     } = variant;
+
     const styleLabel = getStyleLabel(variant);
 
     // Loop over each casing (ie. normalcase, uppercase, lowercase)
@@ -91,13 +101,13 @@ export const generateFonts = (
           fontStyle,
           fontWeight,
           fontSize: px(setting.fontSize),
-          letterSpacing: setting.letterSpacing && px(setting.letterSpacing),
-          lineHeight: setting.lineHeight ? px(setting.lineHeight) : 'initial',
-          textTransform: casing !== FontCasingTypes.normalcase ? casing : 'none',
+          letterSpacing: setting.letterSpacing ? px(setting.letterSpacing) : 'initial',
+          lineHeight: setting.lineHeight ? px(setting.lineHeight) : 'normal',
+          ...(casing !== FontCasingTypes.normalcase && { textTransform: casing }),
           ...options.fontStyles || { },
         };
 
-        if (options.cssFn) {
+        if (typeof options.cssFn === 'function') {
           acc[sizeLabel][weightLabel] = options.cssFn(acc[sizeLabel][weightLabel]);
         }
       });
@@ -109,13 +119,13 @@ export const generateFonts = (
   return styles;
 };
 
-/*
-  Generates a fontFace declaration from a typesettings obj
-*/
-export const generateFontFace = (
+/**
+  * Generate a @font-face declaration from a typesettings obj
+* */
+export const generateFontFace = <T>(
   typesettings: Typesettings,
-  options: TypesettingOptions = { },
-): string => {
+  options: TypesettingOptions<T> = { },
+): TypesettingsFontFaceResult<T> => {
   const { family, variants } = typesettings;
 
   const declaration = variants.map(({ sources, fontStyle, fontWeight }) => {
@@ -142,16 +152,19 @@ export const generateFontFace = (
   });
 
   const fontFace = declaration.join(' ');
-  return options.cssFn ? options.cssFn(fontFace) : fontFace;
+
+  return typeof options.cssFn === 'function'
+    ? options.cssFn(fontFace)
+    : fontFace;
 };
 
-/*
-  Convenience func
-*/
-export const generate = (
+/**
+  * Convenience function to generate font styles and a @font-face declaration
+* */
+export const generate = <T>(
   typesettings: Typesettings,
-  options?: TypesettingOptions,
-): { fontFace: string; fonts: TypesettingResults } => ({
-  fontFace: generateFontFace(typesettings, options),
-  fonts: generateFonts(typesettings, options),
-});
+  options?: TypesettingOptions<T>,
+) => ({
+    fontFace: generateFontFace<T>(typesettings, options),
+    fonts: generateFonts<T>(typesettings, options),
+  });

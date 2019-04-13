@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.10",
     "@postmates/eslint-config": "^4.0.1",
     "@types/node": "^11.13.4",
     "@types/react": "^16.8.13",
