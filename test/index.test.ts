@@ -156,7 +156,8 @@ test('px()', (t) => {
 
 test('parseSize()', (t) => {
   t.is(parseSize('12'), '12', 'Should return the size when given a size without a unit');
-  t.is(parseSize('12px'), '12', 'Should return the size when given a size with a unit');
+  t.is(parseSize('12px'), '12', 'Should return the size when given a size with a px unit');
+  t.is(parseSize('12em'), '12', 'Should return the size when given a size with an em unit');
   t.is(parseSize('s12'), 's12', 'Should return the given value when there is no unit matched');
   t.is(parseSize(12), 12, 'Should return the given value when the value is not a string');
 });
