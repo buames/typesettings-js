@@ -374,10 +374,10 @@ getValue: (typesettings: Object, path: String) => String
 
 ### getFontStack()
 
-Normalizes the family name and all fallbacks, combining them into a font stack.
+Normalizes the family name and all fallbacks, combining them both into a single font stack.
 
 ```js
-getFamilyName: (family: String, fallbacks?: String[]) => String
+getFontStack: (family: String, fallbacks?: String[]) => String
 ```
 
 ### normalizeFamily()
@@ -385,7 +385,7 @@ getFamilyName: (family: String, fallbacks?: String[]) => String
  Returns a normalized FontFamily name where names with a space are automatically wrapped in quotes.
 
 ```js
-getFamilyName: (family: String) => String
+normalizeFamily: (family: String) => String
 ```
 
 ### parseSize()
@@ -416,9 +416,9 @@ import {
 
 type StyledCssFn = (...args: Interpolation[]) => SerializedStyles;
 
-interface MyFontStyles extends FontStyleOptions { }
+interface CustomFontStyles extends FontStyleOptions { }
 
-interface MyFontFaceStyles extends FontFaceStyleOptions {
+interface CustomFontFaceStyles extends FontFaceStyleOptions {
   WebkitFontSmoothing?: 'antialiased', 'subpixel-antialiased', 'inherit', 'initial', 'none';
 }
 
@@ -429,12 +429,12 @@ const typesettings: Typesettings = {
 // Type the `cssFn` and the ResultType(s) of `fonts` and `fontFace`
 generate<StyledCssFn>(typesettings, {
   cssFn: css,
-  fontStyles: {
-              ^ Argument of type 'WebkitFontSmoothing: 'antialiased';' is not assignable [...]
+  fontStyles: <CustomFontStyles>{
+                                ^ Argument of type 'WebkitFontSmoothing: 'antialiased';' is not assignable [...]
     WebkitFontSmoothing: 'antialiased' // WebkitFontSmoothing is not a valid csstype property
   },
-  fontFaceStyles: <MyFontFaceStyles>{
-                                    ^ Argument of type 'WebkitFontSmoothing: 'antialiaseddddd';' is not assignable [...]
+  fontFaceStyles: <CustomFontFaceStyles>{
+                                        ^ Argument of type 'WebkitFontSmoothing: 'antialiaseddddd';' is not assignable [...]
     WebkitFontSmoothing: 'antialiaseddddd' // Mispelling error
   },
 })
