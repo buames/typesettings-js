@@ -20,7 +20,6 @@ test('Should return @font-face declaration as snapshots', (t) => {
       MozFontFeatureSettings: '"tnum", "liga"',
     },
   });
-
   t.snapshot(a, '@font-face declaration when cssFn is undefined');
 
   const { fontFace: b } = Helvetica({
@@ -30,8 +29,12 @@ test('Should return @font-face declaration as snapshots', (t) => {
       WebkitFontSmoothing: 'antialiased',
     },
   });
-
   t.snapshot(b, '@font-face declaration when cssFn is set');
+
+  const { fontFace: c } = Helvetica({
+    eot: false, woff: false, woff2: false, ttf: false,
+  });
+  t.snapshot(c, '@font-face declaration with local sources only');
 });
 
 test('Should return font styles as snapshots', (t) => {
@@ -40,7 +43,6 @@ test('Should return font styles as snapshots', (t) => {
       color: 'tomato',
     },
   });
-
   t.snapshot(a, 'Font styles when cssFn is undefined');
 
   const { fonts: b } = Helvetica({
@@ -50,14 +52,5 @@ test('Should return font styles as snapshots', (t) => {
       WebkitFontSmoothing: 'antialiased',
     },
   });
-
   t.snapshot(b, 'Font styles when cssFn is set');
-});
-
-test('Should return @font-face declaration with local sources only', (t) => {
-  const { fontFace: b } = Helvetica({
-    eot: false, woff: false, woff2: false, ttf: false,
-  });
-
-  t.snapshot(b);
 });

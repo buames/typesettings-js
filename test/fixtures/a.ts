@@ -1,8 +1,7 @@
 import {
   Typesettings,
   TypesettingOptions,
-  generateFonts,
-  generateFontFace,
+  generate,
 } from '../../src';
 
 export interface Options<T> extends TypesettingOptions<T> {
@@ -10,6 +9,8 @@ export interface Options<T> extends TypesettingOptions<T> {
   woff?: boolean;
   woff2?: boolean;
   ttf?: boolean;
+  family?: string;
+  fallbacks?: string[];
 }
 
 export const defaults = {
@@ -17,14 +18,16 @@ export const defaults = {
   woff: true,
   woff2: true,
   ttf: true,
+  family: 'Helvetica',
+  fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
 };
 
-export const Helvetica = <T>(opts?: Options<T>) => {
+export const create = <T>(opts?: Options<T>) => {
   const options = { ...defaults, ...opts };
 
   const config: Typesettings = {
-    family: 'Helvetica',
-    fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
+    family: options.family,
+    fallbacks: options.fallbacks,
     variants: [
       {
         fontStyle: 'italic',
@@ -112,8 +115,11 @@ export const Helvetica = <T>(opts?: Options<T>) => {
     ],
   };
 
-  const fontFace = generateFontFace<T>(config, options);
-  const fonts = generateFonts<T>(config, options);
+  return config;
+};
 
-  return { fontFace, fonts };
+export const Helvetica = <T>(opts?: Options<T>) => {
+  const options = { ...defaults, ...opts };
+  const config = create(options);
+  return generate<T>(config, options);
 };
