@@ -1,7 +1,7 @@
 
 # Typesettings
 
-Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, glamorous or any other CSS-in-JS framework.
+Typesettings is a handful of utilities to help manage typsettings. It can be used with emotion, styled-components, or any other CSS-in-JS framework.
 
 [![Build Status](https://travis-ci.com/buames/typesettings-js.svg?branch=master)](https://travis-ci.com/buames/typesettings-js)
 [![codecov](https://codecov.io/gh/buames/typesettings-js/branch/master/graph/badge.svg)](https://codecov.io/gh/buames/typesettings-js)
@@ -17,7 +17,9 @@ yarn add typesettings-js
 
 #### Contents
 
-- [Typesettings](#typesettings)
+- [Getting Started](#getting-started)
+  - [Typesettings](#typesettings)
+  - [Usage](#usage)
 - [Configuration](#configuration)
   - [Class Names](#class-names)
   - [Additional Font Styles](#additional-font-styles)
@@ -30,9 +32,12 @@ yarn add typesettings-js
     - [getValue()](#getValue)
     - [getFontStack()](#getFontStack)
     - [normalizeFamily()](#normalizeFamily)
+    - [parseSize()](#parseSize)
 - [Typescript](#typescript)
 
-## Typesettings
+## Getting Started
+
+### Typesettings
 
 The first you'll want to do is create your typesettings object. This will be used to create your styled (font) objects as well as a `@font-face` declaration.
 
@@ -98,7 +103,6 @@ const Typesettings = {
           lineHeight: null
         }
       ],
-      ],
       lowercase: [
         {
           fontSize: 12,
@@ -110,6 +114,34 @@ const Typesettings = {
   ]
 }
 ```
+
+### Usage
+
+Once you have your typesettings created, you can easily generate `font style` objects and a `@font-face` declaration to use throughout your app.
+
+```js
+import styled from '@emotion/styled'
+import { Global, css } from '@emotion/core'
+import { generate } from 'typesettings-js'
+
+const typesettings = {
+  // your typesettings object
+}
+
+const { fontFace, fonts } = generate(typesettings)
+
+const TextLabel = styled('p')`
+  ${ fonts.s16.n400 };
+`
+
+render(
+  <div>
+    <Global styles={ fontFace } />
+    <TextLabel>The quick brown fox jumps over the lazy dog.</TextLabel>
+  </div>
+)
+```
+
 
 ## Configuration
 
@@ -133,7 +165,7 @@ const options = {
 
 ### Additional Font Styles
 
-The `fonts` object will return styles for `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform`. You can pass in an object of styles that will be added to these using the `fontStyles` option.
+The `fonts` object will return styles for `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform`. You can pass in an object of styles that will be **added** to these using the `fontStyles` option.
 
 ```js
 const options = {
@@ -147,7 +179,7 @@ const options = {
 
 ### Additional Font Face Styles
 
-The `fontFace` declaration will return styles for `font-family`, `font-style`, and `font-weight`. You can pass in an object of styles that will be added to these using the `fontFaceStyles` option.
+The `fontFace` declaration will return styles for `font-family`, `font-style`, and `font-weight` as well as the font file `src`. You can pass in an object of styles that will be **added** to these using the `fontFaceStyles` option.
 
 ```js
 const options = {
@@ -169,7 +201,7 @@ generate: (typesettings: Object, options?: Object) => {
 }
 ```
 
-Generate a fontFace declaration and an object of styled objects from your typesettings.
+Generate a fontFace declaration and an object of styled objects from your typesettings. You can pass in objects of additional  [`fontFaceStyles`](#additional-font-face-styles) and  [`fontStyles`](#additional-font-styles) that will be added to these.
 
 ```js
 import styled from '@emotion/styled'
@@ -208,7 +240,7 @@ render(
 generateFonts: (typesettings: Object, options?: Object) => Object
 ```
 
-Generate styled objects to be used with CSS-in-JS frameworks from your typesettings. By default, `font-family`, `font-size`, `font-style`, `font-weight`, `letter-spacing`, `line-height`, and `text-transform` will be return styles. You can pass in an object of styles that will be added to these.
+Generate styled objects to be used with CSS-in-JS frameworks from your typesettings. You can pass in an object of additional  [`fontStyles`](#additional-font-styles) that will be added to these.
 
 **Example**
 
@@ -253,7 +285,7 @@ render(
 )
 ```
 
-If you'd prefer to have objects of classnames, add a `cssFn` in the options.
+If you'd prefer to have objects of classnames, set a [`cssFn`](#class-names) in the options.
 
 ```js
 import styled from '@emotion/styled'
@@ -304,7 +336,7 @@ render(
 generateFontFace: (typesettings: Object, options?: Object) => Object
 ```
 
-Generates a @font-face css declariation from typesettings.
+Generates a @font-face css declariation from typesettings. You can pass in an object of additional [`fontFaceStyles`](#additional-font-face-styles) that will be added to these.
 
 **Example**
 
@@ -337,15 +369,15 @@ render(
 Returns a value from a given Typesettings obj and a path to the key
 
 ```js
-getFamilyName: (family: String, fallbacks: String[]) => String
+getValue: (typesettings: Object, path: String) => String
 ```
 
 ### getFontStack()
 
-Normalizes the family name and all fallbacks, combining them into a font stack.
+Normalizes the family name and all fallbacks, combining them both into a single font stack.
 
 ```js
-getFamilyName: (family: String, fallbacks: String[]) => String
+getFontStack: (family: String, fallbacks?: String[]) => String
 ```
 
 ### normalizeFamily()
@@ -353,12 +385,22 @@ getFamilyName: (family: String, fallbacks: String[]) => String
  Returns a normalized FontFamily name where names with a space are automatically wrapped in quotes.
 
 ```js
-getFamilyName: (family: String) => String
+normalizeFamily: (family: String) => String
+```
+
+### parseSize()
+
+ Parses a number and unit string, returning only the number used
+
+```js
+parseSize: (str: String) => String
 ```
 
 ## Typescript
 
 Typescript types and interfaces are exported. You can import them as named imports. See all the type definitions in the [src/types.ts](./src/types.ts) file.
+
+TypeScript checks css properties with the object style syntax using [`csstype`](https://www.npmjs.com/package/csstype) package.
 
 Example typing and extending typesetting `options`.
 
@@ -367,47 +409,33 @@ Example typing and extending typesetting `options`.
 import { Interpolation, SerializedStyles } from '@emotion/core';
 import {
   generate,
-  FontStyles,
-  FontFaceStyles,
+  FontStyleOptions,
+  FontFaceStyleOptions,
   Typesettings,
-  TypesettingOptions
 } from 'typesettings-js';
 
-type CssFn = (...args: Interpolation[]) => SerializedStyles;
+type StyledCssFn = (...args: Interpolation[]) => SerializedStyles;
 
-interface ExtendedFontStyles extends FontStyles { }
+interface CustomFontStyles extends FontStyleOptions { }
 
-interface ExtendedFontFaceStyles extends FontFaceStyles {
-  WebkitFontSmoothing: string;
+interface CustomFontFaceStyles extends FontFaceStyleOptions {
+  WebkitFontSmoothing?: 'antialiased', 'subpixel-antialiased', 'inherit', 'initial', 'none';
 }
 
-interface MyOptions extends TypesettingOptions<CssFn, ExtendedFontStyles, ExtendedFontFaceStyles> {
-  family: 'Helvetica' | 'Menlo';
+const typesettings: Typesettings = {
+  // your typesettings
 }
 
-export const HelveticaOrMenlo = (opts: MyOptions = { }) => {
-  const settings = {
-    family: opts.family || 'Helvetica',
-    // ...rest of typesettings
-  }
-
-  return generate(settings, opts)
-}
-
-// bar.ts
-import { css } from '@emotion/core'
-import { HelveticaOrMenlo } from 'path/to/foo'
-
-const { fonts } = HelveticaOrMenlo({
+// Type the `cssFn` and the ResultType(s) of `fonts` and `fontFace`
+generate<StyledCssFn>(typesettings, {
   cssFn: css,
-  fontStyles: {
-    textRendering: 'optimizeLegibility',
-    WebkitFontSmoothing: 'antialiased'
+  fontStyles: <CustomFontStyles>{
+                                ^ Argument of type 'WebkitFontSmoothing: 'antialiased';' is not assignable [...]
+    WebkitFontSmoothing: 'antialiased' // WebkitFontSmoothing is not a valid csstype property
   },
-  family: 'Helvetica'
-})
-
-const { fonts } = HelveticaOrMenlo({
-  cssFn: (() => void) // error
+  fontFaceStyles: <CustomFontFaceStyles>{
+                                        ^ Argument of type 'WebkitFontSmoothing: 'antialiaseddddd';' is not assignable [...]
+    WebkitFontSmoothing: 'antialiaseddddd' // Mispelling error
+  },
 })
 ```
