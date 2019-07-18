@@ -17,6 +17,7 @@
     "strictFunctionTypes": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
+    "downlevelIteration": true,
     "removeComments": true,
     "typeRoots": [
       "node_modules/@types"
