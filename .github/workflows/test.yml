@@ -1,0 +1,29 @@
+name: Test
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+      - '!master'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [8, 10, 12]
+      fail-fast: true
+    name: Jest & EsLint @ Node ${{ matrix.node }}
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies
+        run: yarn install --ignore-engines --frozen-lockfile
+      - name: Build all files
+        run: yarn run build
+      - name: Run eslint
+        run: yarn run lint --quiet
+      - name: Run test
+        run: yarn run jest

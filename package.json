@@ -20,7 +20,7 @@
     "test": "yarn clean && yarn build && yarn jest",
     "jest": "jest --colors --logHeapUsage",
     "jest:coverage": "yarn jest --coverage",
-    "lint": "eslint . --ext js,jsx,ts,tsx --color --max-warnings=0 --report-unused-disable-directives",
+    "lint": "eslint . --ext ts,tsx --max-warnings=0 --report-unused-disable-directives",
     "pretty": "prettier \"**/*.{js,jsx,ts,tsx,md,mdx,json}\" --write",
     "types": "tsc"
   },
@@ -28,7 +28,7 @@
     "**/*.{js,jsx,ts,tsx,md,mdx,json}": [
       "yarn pretty"
     ],
-    "**/*.{ts,tsx,js,jsx}": [
+    "**/*.{ts,tsx}": [
       "yarn lint --fix"
     ]
   },

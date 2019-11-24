@@ -1,0 +1,23 @@
+name: Codecov
+on:
+  push:
+    branches:
+      - master
+jobs:
+  codecov:
+    runs-on: ubuntu-latest
+    name: Codecov
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+      - name: Install dependencies
+        run: yarn install --ignore-engines --frozen-lockfile
+      - name: Build packages
+        run: yarn run build
+      - name: Run test
+        run: yarn run jest:coverage
+      - name: Upload coverage to Codecov
+        uses: ./.github/actions/codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

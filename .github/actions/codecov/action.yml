@@ -1,0 +1,8 @@
+name: Codecov
+description: Upload coverage reports to codecov.io
+branding:
+  icon: type
+  color: gray-dark
+runs:
+  using: node12
+  main: ./index.js
