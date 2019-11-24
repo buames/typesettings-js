@@ -1,170 +1,218 @@
-/* eslint-disable import/extensions,import/no-unresolved  */
-import test from 'ava';
 import { create } from './fixtures/a';
 import {
   generateFontFace,
   generateFonts,
   getFontStack,
-  getValue,
   normalizeFamily,
   parseSize,
   px,
 } from '../src';
 
-test('Should return @font-face declaration as a string', (t) => {
+it('returns @font-face declaration as a string', () => {
   const a = generateFontFace(create());
-  t.truthy(typeof a === 'string');
+  expect(typeof a === 'string').toBe(true);
 });
 
-test('Should return @font-face declaration as snapshots', (t) => {
+it('returns @font-face declaration as snapshots', () => {
   const a = generateFontFace(create({ family: 'Helvetica' }));
-  t.snapshot(a, '@font-face declaration without the family wrapped in quotes');
+  expect(a).toMatchSnapshot(
+    '@font-face declaration without the family wrapped in quotes',
+  );
 
   const b = generateFontFace(create({ family: 'Helvetica Neue' }));
-  t.snapshot(b, '@font-face declaration with the family wrapped in quotes');
+  expect(b).toMatchSnapshot(
+    '@font-face declaration with the family wrapped in quotes',
+  );
 
-  const c = generateFontFace(create(), { fontFaceStyles: { fontDisplay: 'swap', MozFontFeatureSettings: '"tnum", "liga"' } });
-  t.snapshot(c, '@font-face declaration with additional fontFace styles');
+  const c = generateFontFace(create(), {
+    fontFaceStyles: {
+      fontDisplay: 'swap',
+      MozFontFeatureSettings: '"tnum", "liga"',
+    },
+  });
+  expect(c).toMatchSnapshot(
+    '@font-face declaration with additional fontFace styles',
+  );
 });
 
-test('Should return font styles as an object', (t) => {
+it('returns font styles as an object', () => {
   const a = generateFonts(create());
-  t.truthy(typeof a === 'object');
+  expect(typeof a === 'object').toBe(true);
 });
 
-test('Should return font styles as snapshots', (t) => {
+it('returns font styles as snapshots', () => {
   const a = generateFonts(create());
-  t.snapshot(a, 'Font styles as objects with fallback families');
+  expect(a).toMatchSnapshot('Font styles as objects with fallback families');
 
   const b = generateFontFace(create({ fallbacks: undefined }));
-  t.snapshot(b, 'Font styles as objects without fallback families');
+  expect(b).toMatchSnapshot('Font styles as objects without fallback families');
 
-  const c = generateFonts(create(), { fontStyles: { textRendering: 'optimizeLegibility' } });
-  t.snapshot(c, 'Font styles with additional font styles');
+  const c = generateFonts(create(), {
+    fontStyles: { textRendering: 'optimizeLegibility' },
+  });
+  expect(b).toMatchSnapshot('Font styles with additional font styles');
 });
 
-test('Should return font-family without quotes', (t) => {
+it('returns font-family without quotes', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500.fontFamily, 'Helvetica, -apple-system, BlinkMacSystemFont');
+  expect(a.s20.n500.fontFamily).toBe(
+    'Helvetica, -apple-system, BlinkMacSystemFont',
+  );
 });
 
-test('Should return font-family without a fallback', (t) => {
+it('returns font-family without a fallback', () => {
   const a = generateFonts(create({ fallbacks: undefined }));
-  t.is(a.s20.n500.fontFamily, 'Helvetica');
+  expect(a.s20.n500.fontFamily).toBe('Helvetica');
 });
 
-test('Should return font-family with quotes', (t) => {
+it('returns font-family with quotes', () => {
   const a = generateFonts(create({ family: 'Helvetica Neue' }));
-  t.is(a.s20.n500.fontFamily, '\'Helvetica Neue\', -apple-system, BlinkMacSystemFont');
+  expect(a.s20.n500.fontFamily).toBe(
+    "'Helvetica Neue', -apple-system, BlinkMacSystemFont",
+  );
 });
 
-test('Should return font-style as italic', (t) => {
+it('returns font-style as italic', () => {
   const a = generateFonts(create());
-  t.is(a.s14.i400.fontStyle, 'italic');
+  expect(a.s14.i400.fontStyle).toBe('italic');
 });
 
-test('Should return font-style as normal', (t) => {
+it('returns font-style as normal', () => {
   const a = generateFonts(create());
-  t.is(a.s14.n400.fontStyle, 'normal');
+  expect(a.s14.n400.fontStyle).toBe('normal');
 });
 
-test('Should return font-size in px', (t) => {
+it('returns font-size in px', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500.fontSize, '20px');
+  expect(a.s20.n500.fontSize).toBe('20px');
 });
 
-test('Should return font-size in rem', (t) => {
+it('returns font-size in rem', () => {
   const a = generateFonts(create());
-  t.is(a.s20.nBold.fontSize, '20rem');
+  expect(a.s20.nBold.fontSize).toBe('20rem');
 });
 
-test('Should return font-weight as a number', (t) => {
+it('returns font-weight as a number', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500.fontWeight, 500);
+  expect(a.s20.n500.fontWeight).toBe(500);
 });
 
-test('Should return font-weight as a string', (t) => {
+it('returns font-weight as a string', () => {
   const a = generateFonts(create());
-  t.is(a.s20.nBold.fontWeight, 'bold');
+  expect(a.s20.nBold.fontWeight).toBe('bold');
 });
 
-test('Should return letter-spacing as initial', (t) => {
+it('returns letter-spacing as initial', () => {
   const a = generateFonts(create());
-  t.is(a.s14.n400.letterSpacing, 'initial');
+  expect(a.s14.n400.letterSpacing).toBe('initial');
 });
 
-test('Should return letter-spacing in px', (t) => {
+it('returns letter-spacing in px', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500.letterSpacing, '0.29px');
+  expect(a.s20.n500.letterSpacing).toBe('0.29px');
 });
 
-test('Should return letter-spacing in em', (t) => {
+it('returns letter-spacing in em', () => {
   const a = generateFonts(create());
-  t.is(a.s20.nBold.letterSpacing, '0.29em');
+  expect(a.s20.nBold.letterSpacing).toBe('0.29em');
 });
 
-test('Should return line-height in px', (t) => {
+it('returns line-height in px', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500.lineHeight, '22px');
+  expect(a.s20.n500.lineHeight).toBe('22px');
 });
 
-test('Should return line-height in em', (t) => {
+it('returns line-height in em', () => {
   const a = generateFonts(create());
-  t.is(a.s20.nBold.lineHeight, '22em');
+  expect(a.s20.nBold.lineHeight).toBe('22em');
 });
 
-test('Should return line-height as normal', (t) => {
+it('returns line-height as normal', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500_lower.lineHeight, 'normal');
+  expect(a.s20.n500_lower.lineHeight).toBe('normal');
 });
 
-test('Should return text-transform as undefined', (t) => {
+it('returns text-transform as undefined', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500.textTransform, undefined);
+  expect(a.s20.n500.textTransform).toBeUndefined();
 });
 
-test('Should return text-transform as uppercase', (t) => {
+it('returns text-transform as uppercase', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500_caps.textTransform, 'uppercase');
+  expect(a.s20.n500_caps.textTransform).toBe('uppercase');
 });
 
-test('Should return text-transform as lowercase', (t) => {
+it('returns text-transform as lowercase', () => {
   const a = generateFonts(create());
-  t.is(a.s20.n500_lower.textTransform, 'lowercase');
+  expect(a.s20.n500_lower.textTransform).toBe('lowercase');
 });
 
-test('getValue()', (t) => {
-  const config = create();
-  t.is(getValue(config, 'foo'), null, 'Should return null');
-  t.is(getValue(config, 'family'), 'Helvetica', 'Should return a value');
-  t.is(getValue(config, 'variants.0.fontStyle'), 'italic', 'Should return a nested value');
-  t.deepEqual(getValue<string[]>(config, 'variants.0.sources.locals'), ['Helvetica Regular', 'Helvetica-Regular'], 'Should return a nested array');
-  t.truthy(Array.isArray(getValue(config, 'variants')), 'Should return an array of objects');
+describe('getFontStack', () => {
+  it('returns a font stack with fallbacks and no quotes', () => {
+    expect(getFontStack('Helvetica')).toBe('Helvetica');
+  });
+
+  it('returns a font stack with fallbacks and quotes', () => {
+    expect(getFontStack('Helvetica Neue', ['Arial', 'Comic Sans'])).toBe(
+      "'Helvetica Neue', Arial, 'Comic Sans'",
+    );
+  });
 });
 
-test('getFontStack()', (t) => {
-  t.is(getFontStack('Helvetica'), 'Helvetica', 'Should return a font stack without fallbacks and no quotes');
-  t.is(getFontStack('Helvetica', ['Arial']), 'Helvetica, Arial', 'Should return a font stack with fallbacks and no quotes');
-  t.is(getFontStack('Helvetica Neue', ['Arial', 'Comic Sans']), '\'Helvetica Neue\', Arial, \'Comic Sans\'', 'Should return a font stack with fallbacks and quotes');
+describe('px()', () => {
+  it('converts number value to pixels', () => {
+    expect(px(8)).toBe('8px');
+  });
+
+  it('converts string value to pixels', () => {
+    expect(px('8px')).toBe('8px');
+  });
+
+  it('does not convert value to pixels', () => {
+    expect(px('8em')).toBe('8em');
+  });
 });
 
-test('px()', (t) => {
-  t.is(px(8), '8px', 'Should convert value to pixels');
-  t.is(px('8px'), '8px', 'Should convert value to pixels');
-  t.is(px('8em'), '8em', 'Should not convert value to pixels');
+describe('parseSize()', () => {
+  it('returns the size when given a size without a unit', () => {
+    expect(parseSize('12')).toBe('12');
+  });
+
+  it('returns the size when given a size with a px unit', () => {
+    expect(parseSize('12px')).toBe('12');
+  });
+
+  it('returns the size when given a size with an em unit', () => {
+    expect(parseSize('12em')).toBe('12');
+  });
+
+  it('returns the given value when there is no unit matched', () => {
+    expect(parseSize('s12')).toBe('s12');
+  });
+
+  it('returns the given value when the value is not a string', () => {
+    expect(parseSize(12)).toBe(12);
+  });
 });
 
-test('parseSize()', (t) => {
-  t.is(parseSize('12'), '12', 'Should return the size when given a size without a unit');
-  t.is(parseSize('12px'), '12', 'Should return the size when given a size with a px unit');
-  t.is(parseSize('12em'), '12', 'Should return the size when given a size with an em unit');
-  t.is(parseSize('s12'), 's12', 'Should return the given value when there is no unit matched');
-  t.is(parseSize(12), 12, 'Should return the given value when the value is not a string');
-});
+describe('normalizeFamily()', () => {
+  it('returns a family name without quotes', () => {
+    expect(normalizeFamily('Helvetica')).toBe('Helvetica');
+  });
 
-test('normalizeFamily()', (t) => {
-  t.is(normalizeFamily('Helvetica'), 'Helvetica', 'Should return a family name without quotes');
-  t.is(normalizeFamily('Helvetica, -apple-system, BlinkMacSystemFont'), '\'Helvetica, -apple-system, BlinkMacSystemFont\'', 'Should return a family name without quotes');
-  t.is(normalizeFamily('Helvetica Neue'), '\'Helvetica Neue\'', 'Should return a family name with quotes');
-  t.is(normalizeFamily('Helvetica Neue, Comic Sans'), '\'Helvetica Neue, Comic Sans\'', 'Should return a family name with quotes');
+  it('returns multiple family names without quotes', () => {
+    expect(
+      normalizeFamily('Helvetica, -apple-system, BlinkMacSystemFont'),
+    ).toBe("'Helvetica, -apple-system, BlinkMacSystemFont'");
+  });
+
+  it('returns a family name with quotes', () => {
+    expect(normalizeFamily('Helvetica Neue')).toBe("'Helvetica Neue'");
+  });
+
+  it('returns multiple family names with quotes', () => {
+    expect(normalizeFamily('Helvetica Neue, Comic Sans')).toBe(
+      "'Helvetica Neue, Comic Sans'",
+    );
+  });
 });

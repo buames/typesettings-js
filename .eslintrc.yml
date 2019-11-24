@@ -1,8 +1,0 @@
-extends:
-  - "@postmates"
-
-settings:
-  import/resolver:
-    node:
-      extensions:
-        - ".ts"

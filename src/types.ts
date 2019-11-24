@@ -9,28 +9,32 @@ import {
   Properties,
 } from 'csstype';
 
-export type StyledCssFn = (...styles: any[]) => any;
+export const fontCasings = {
+  normalcase: 'normalcase',
+  uppercase: 'uppercase',
+  lowercase: 'lowercase',
+} as const;
+
+export const fontSources = {
+  locals: 'locals',
+  woff2: 'woff2',
+  woff: 'woff',
+  ttf: 'ttf',
+  otf: 'opentype',
+  eot: 'embedded-opentype',
+} as const;
+
+type ValueOf<
+  T extends Record<string | number | symbol, unknown>
+> = T extends object ? keyof T : never;
+
+export type StyledCssFn = (...styles: unknown[]) => unknown;
 
 export type StyledValue = string | number | undefined | null;
 
 export interface StyledObject {
   [k: string]: StyledValue;
 }
-
-export enum FontCasingTypes {
-    normalcase = 'normalcase',
-    uppercase = 'uppercase',
-    lowercase = 'lowercase'
-  }
-
-export enum FontSourceTypes {
-    locals = 'locals',
-    woff2 = 'woff2',
-    woff = 'woff',
-    ttf = 'ttf',
-    otf = 'opentype',
-    eot = 'embedded-opentype'
-  }
 
 export interface Typesettings {
   family: FontFamilyProperty;
@@ -48,7 +52,11 @@ export interface FontVariant {
 }
 
 export type FontSources = {
-  [K in keyof typeof FontSourceTypes]?: string | string[] | NodeRequireFunction | false
+  [K in ValueOf<typeof fontSources>]?:
+    | string
+    | string[]
+    | NodeRequireFunction
+    | false;
 };
 
 export interface FontSetting extends StyledObject {
@@ -58,20 +66,22 @@ export interface FontSetting extends StyledObject {
 }
 
 export interface TypesettingOptions<T = StyledCssFn> {
-  [k: string]: any;
+  [k: string]: unknown;
   cssFn?: T;
   fontStyles?: FontStyleOptions;
   fontFaceStyles?: FontFaceOptions;
 }
 
-export interface FontStyleOptions extends Properties<StyledValue> { }
+export interface FontStyleOptions extends Properties<StyledValue> {}
 
-export interface FontFaceOptions extends FontFace { }
+export interface FontFaceOptions extends FontFace {}
 
 export type TypesettingsFontsResult<T> = {
   [size: string]: {
     [weight: string]: T extends StyledCssFn ? ReturnType<T> : StyledObject;
   };
-}
+};
 
-export type TypesettingsFontFaceResult<T> = T extends StyledCssFn ? ReturnType<T> : string
+export type TypesettingsFontFaceResult<T> = T extends StyledCssFn
+  ? ReturnType<T>
+  : string;

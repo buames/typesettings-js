@@ -1,32 +1,23 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "rootDir": "src",
-    "target": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "dist/cjs",
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "lib": ["dom", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
-    "declaration": true,
-    "declarationDir": "./dist/gen-types",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "sourceMap": true,
-    "strict": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
+    "noEmitOnError": true,
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "preserveConstEnums": true,
-    "removeComments": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "outDir": "dist/cjs",
+    "rootDir": "src",
+    "strict": true,
+    "target": "esnext"
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "test/*.ts"
-  ]
+  "exclude": ["dist", "test"],
+  "include": ["src/**/*"]
 }

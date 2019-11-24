@@ -1,8 +1,4 @@
-import {
-  Typesettings,
-  TypesettingOptions,
-  generate,
-} from '../../src';
+import { Typesettings, TypesettingOptions, generate } from '../../src';
 
 export interface Options<T> extends TypesettingOptions<T> {
   eot?: boolean;
