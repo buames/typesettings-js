@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should return @font-face declaration as snapshots: @font-face declaration when cssFn is set 1`] = `
+Object {
+  "map": undefined,
+  "name": "1txkm0m",
+  "next": undefined,
+  "styles": "@font-face { font-style: italic;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular');font-display: swap;-webkit-font-smoothing: antialiased; } @font-face { font-style: normal;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular');font-display: swap;-webkit-font-smoothing: antialiased; } @font-face { font-style: normal;font-weight: 500;font-family: Helvetica;src: local('Helvetica Medium'),local('Helvetica-Medium'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf');font-display: swap;-webkit-font-smoothing: antialiased; } @font-face { font-style: normal;font-weight: bold;font-family: Helvetica;src: local('Helvetica Bold'),local('Helvetica-Bold'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf');font-display: swap;-webkit-font-smoothing: antialiased; }",
+  "toString": [Function],
+}
+`;
+
+exports[`Should return @font-face declaration as snapshots: @font-face declaration when cssFn is undefined 1`] = `"@font-face { font-style: italic;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular');font-display: swap;-webkit-font-smoothing: antialiased;-moz-font-feature-settings: \\"tnum\\", \\"liga\\"; } @font-face { font-style: normal;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular');font-display: swap;-webkit-font-smoothing: antialiased;-moz-font-feature-settings: \\"tnum\\", \\"liga\\"; } @font-face { font-style: normal;font-weight: 500;font-family: Helvetica;src: local('Helvetica Medium'),local('Helvetica-Medium'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf');font-display: swap;-webkit-font-smoothing: antialiased;-moz-font-feature-settings: \\"tnum\\", \\"liga\\"; } @font-face { font-style: normal;font-weight: bold;font-family: Helvetica;src: local('Helvetica Bold'),local('Helvetica-Bold'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf');font-display: swap;-webkit-font-smoothing: antialiased;-moz-font-feature-settings: \\"tnum\\", \\"liga\\"; }"`;
+
+exports[`Should return @font-face declaration as snapshots: @font-face declaration with local sources only 1`] = `"@font-face { font-style: italic;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular'); } @font-face { font-style: normal;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular'); } @font-face { font-style: normal;font-weight: 500;font-family: Helvetica;src: local('Helvetica Medium'),local('Helvetica-Medium'); } @font-face { font-style: normal;font-weight: bold;font-family: Helvetica;src: local('Helvetica Bold'),local('Helvetica-Bold'); }"`;
+
+exports[`Should return font styles as snapshots: Font styles when cssFn is set 1`] = `
+Object {
+  "s14": Object {
+    "i400": Object {
+      "map": undefined,
+      "name": "123olr4",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:italic;font-weight:400;font-size:14px;letter-spacing:initial;line-height:18px;color:tomato;-webkit-font-smoothing:antialiased;",
+      "toString": [Function],
+    },
+    "n400": Object {
+      "map": undefined,
+      "name": "19q1q25",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:400;font-size:14px;letter-spacing:initial;line-height:18px;color:tomato;-webkit-font-smoothing:antialiased;",
+      "toString": [Function],
+    },
+  },
+  "s20": Object {
+    "n500": Object {
+      "map": undefined,
+      "name": "1u333n9",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:0.29px;line-height:22px;color:tomato;-webkit-font-smoothing:antialiased;",
+      "toString": [Function],
+    },
+    "n500_caps": Object {
+      "map": undefined,
+      "name": "1ycmwgf",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:1px;line-height:1px;text-transform:uppercase;color:tomato;-webkit-font-smoothing:antialiased;",
+      "toString": [Function],
+    },
+    "n500_lower": Object {
+      "map": undefined,
+      "name": "hb0rtp",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:initial;line-height:normal;text-transform:lowercase;color:tomato;-webkit-font-smoothing:antialiased;",
+      "toString": [Function],
+    },
+    "nBold": Object {
+      "map": undefined,
+      "name": "ypfkkj",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:bold;font-size:20rem;letter-spacing:0.29em;line-height:22em;color:tomato;-webkit-font-smoothing:antialiased;",
+      "toString": [Function],
+    },
+  },
+  "sFooBar": Object {
+    "nBold": Object {
+      "map": undefined,
+      "name": "yyriff",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:bold;font-size:FooBar;letter-spacing:0.29em;line-height:22em;color:tomato;-webkit-font-smoothing:antialiased;",
+      "toString": [Function],
+    },
+  },
+}
+`;
+
+exports[`Should return font styles as snapshots: Font styles when cssFn is undefined 1`] = `
+Object {
+  "s14": Object {
+    "i400": Object {
+      "color": "tomato",
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "14px",
+      "fontStyle": "italic",
+      "fontWeight": 400,
+      "letterSpacing": "initial",
+      "lineHeight": "18px",
+    },
+    "n400": Object {
+      "color": "tomato",
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "14px",
+      "fontStyle": "normal",
+      "fontWeight": 400,
+      "letterSpacing": "initial",
+      "lineHeight": "18px",
+    },
+  },
+  "s20": Object {
+    "n500": Object {
+      "color": "tomato",
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "0.29px",
+      "lineHeight": "22px",
+    },
+    "n500_caps": Object {
+      "color": "tomato",
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "1px",
+      "lineHeight": "1px",
+      "textTransform": "uppercase",
+    },
+    "n500_lower": Object {
+      "color": "tomato",
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "initial",
+      "lineHeight": "normal",
+      "textTransform": "lowercase",
+    },
+    "nBold": Object {
+      "color": "tomato",
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20rem",
+      "fontStyle": "normal",
+      "fontWeight": "bold",
+      "letterSpacing": "0.29em",
+      "lineHeight": "22em",
+    },
+  },
+  "sFooBar": Object {
+    "nBold": Object {
+      "color": "tomato",
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "FooBar",
+      "fontStyle": "normal",
+      "fontWeight": "bold",
+      "letterSpacing": "0.29em",
+      "lineHeight": "22em",
+    },
+  },
+}
+`;
