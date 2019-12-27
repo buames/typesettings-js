@@ -1,18 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should return @font-face declaration snapshots: @font-face declaration when cssFn is set 1`] = `
-Object {
-  "map": undefined,
-  "name": "jj2j4f",
-  "next": undefined,
-  "styles": "@font-face { font-style: italic;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular'); } @font-face { font-style: normal;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular'); } @font-face { font-style: normal;font-weight: 500;font-family: Helvetica;src: local('Helvetica Medium'),local('Helvetica-Medium'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf'); } @font-face { font-style: normal;font-weight: bold;font-family: Helvetica;src: local('Helvetica Bold'),local('Helvetica-Bold'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf'); }",
-  "toString": [Function],
-}
-`;
-
-exports[`Should return @font-face declaration snapshots: @font-face declaration when cssFn is undefined 1`] = `"@font-face { font-style: italic;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular'); } @font-face { font-style: normal;font-weight: 400;font-family: Helvetica;src: local('Helvetica Regular'),local('Helvetica-Regular'); } @font-face { font-style: normal;font-weight: 500;font-family: Helvetica;src: local('Helvetica Medium'),local('Helvetica-Medium'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf'); } @font-face { font-style: normal;font-weight: bold;font-family: Helvetica;src: local('Helvetica Bold'),local('Helvetica-Bold'), url(./font-file.eot?#iefix) format('embedded-opentype'), url(./font-file.woff) format('woff'), url(./font-file.woff2) format('woff2'), url(./font-file.ttf) format('ttf'); }"`;
-
-exports[`Should return font style snapshots: \`styled\` ArrayInterpolation font styles when cssFn is set 1`] = `
+exports[`returns \`styled\` ArrayInterpolation font styles when cssFn is set 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -39,7 +27,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: \`styled\` ArrayInterpolation font styles when cssFn is undefined 1`] = `
+exports[`returns \`styled\` ArrayInterpolation font styles when cssFn is undefined 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -67,7 +55,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: \`styled\` Interpolation font styles when cssFn is set 1`] = `
+exports[`returns \`styled\` Interpolation font styles when cssFn is set 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -93,7 +81,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: \`styled\` Interpolation font styles when cssFn is undefined 1`] = `
+exports[`returns \`styled\` Interpolation font styles when cssFn is undefined 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -120,7 +108,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: \`styled\` ObjectInterpolation font styles (spread) when cssFn is set 1`] = `
+exports[`returns \`styled\` ObjectInterpolation font styles (spread) when cssFn is set 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -143,7 +131,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: \`styled\` ObjectInterpolation font styles (spread) when cssFn is undefined 1`] = `
+exports[`returns \`styled\` ObjectInterpolation font styles (spread) when cssFn is undefined 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -167,7 +155,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: \`styled\` ObjectInterpolation font styles when cssFn is set 1`] = `
+exports[`returns \`styled\` ObjectInterpolation font styles when cssFn is set 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -192,7 +180,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: \`styled\` ObjectInterpolation font styles when cssFn is undefined 1`] = `
+exports[`returns \`styled\` ObjectInterpolation font styles when cssFn is undefined 1`] = `
 Object {
   "$$typeof": Symbol(react.forward_ref),
   "__emotion_base": "p",
@@ -218,67 +206,7 @@ Object {
 }
 `;
 
-exports[`Should return font style snapshots: Font styles default return type when cssFn is set 1`] = `
-Object {
-  "s14": Object {
-    "i400": Object {
-      "map": undefined,
-      "name": "lhonde",
-      "next": undefined,
-      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:italic;font-weight:400;font-size:14px;letter-spacing:initial;line-height:18px;",
-      "toString": [Function],
-    },
-    "n400": Object {
-      "map": undefined,
-      "name": "1ezn3fw",
-      "next": undefined,
-      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:400;font-size:14px;letter-spacing:initial;line-height:18px;",
-      "toString": [Function],
-    },
-  },
-  "s20": Object {
-    "n500": Object {
-      "map": undefined,
-      "name": "y7zql4",
-      "next": undefined,
-      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:0.29px;line-height:22px;",
-      "toString": [Function],
-    },
-    "n500_caps": Object {
-      "map": undefined,
-      "name": "dmcrvq",
-      "next": undefined,
-      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:1px;line-height:1px;text-transform:uppercase;",
-      "toString": [Function],
-    },
-    "n500_lower": Object {
-      "map": undefined,
-      "name": "1yn3z8j",
-      "next": undefined,
-      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:initial;line-height:normal;text-transform:lowercase;",
-      "toString": [Function],
-    },
-    "nBold": Object {
-      "map": undefined,
-      "name": "qgokl4",
-      "next": undefined,
-      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:bold;font-size:20rem;letter-spacing:0.29em;line-height:22em;",
-      "toString": [Function],
-    },
-  },
-  "sFooBar": Object {
-    "nBold": Object {
-      "map": undefined,
-      "name": "jc2bz6",
-      "next": undefined,
-      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:bold;font-size:FooBar;letter-spacing:0.29em;line-height:22em;",
-      "toString": [Function],
-    },
-  },
-}
-`;
-
-exports[`Should return font style snapshots: Font styles default return type when cssFn is undefined 1`] = `
+exports[`returns font styles as objects with fallback families 1`] = `
 Object {
   "s14": Object {
     "i400": Object {
@@ -342,6 +270,211 @@ Object {
       "fontWeight": "bold",
       "letterSpacing": "0.29em",
       "lineHeight": "22em",
+    },
+  },
+}
+`;
+
+exports[`returns font styles default return type when cssFn is undefined 1`] = `
+Object {
+  "s14": Object {
+    "i400": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "14px",
+      "fontStyle": "italic",
+      "fontWeight": 400,
+      "letterSpacing": "initial",
+      "lineHeight": "18px",
+    },
+    "n400": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "14px",
+      "fontStyle": "normal",
+      "fontWeight": 400,
+      "letterSpacing": "initial",
+      "lineHeight": "18px",
+    },
+  },
+  "s20": Object {
+    "n500": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "0.29px",
+      "lineHeight": "22px",
+    },
+    "n500_caps": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "1px",
+      "lineHeight": "1px",
+      "textTransform": "uppercase",
+    },
+    "n500_lower": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "initial",
+      "lineHeight": "normal",
+      "textTransform": "lowercase",
+    },
+    "nBold": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20rem",
+      "fontStyle": "normal",
+      "fontWeight": "bold",
+      "letterSpacing": "0.29em",
+      "lineHeight": "22em",
+    },
+  },
+  "sFooBar": Object {
+    "nBold": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "FooBar",
+      "fontStyle": "normal",
+      "fontWeight": "bold",
+      "letterSpacing": "0.29em",
+      "lineHeight": "22em",
+    },
+  },
+}
+`;
+
+exports[`returns font styles when cssFn is set 1`] = `
+Object {
+  "s14": Object {
+    "i400": Object {
+      "map": undefined,
+      "name": "lhonde",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:italic;font-weight:400;font-size:14px;letter-spacing:initial;line-height:18px;",
+      "toString": [Function],
+    },
+    "n400": Object {
+      "map": undefined,
+      "name": "1ezn3fw",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:400;font-size:14px;letter-spacing:initial;line-height:18px;",
+      "toString": [Function],
+    },
+  },
+  "s20": Object {
+    "n500": Object {
+      "map": undefined,
+      "name": "y7zql4",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:0.29px;line-height:22px;",
+      "toString": [Function],
+    },
+    "n500_caps": Object {
+      "map": undefined,
+      "name": "dmcrvq",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:1px;line-height:1px;text-transform:uppercase;",
+      "toString": [Function],
+    },
+    "n500_lower": Object {
+      "map": undefined,
+      "name": "1yn3z8j",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:500;font-size:20px;letter-spacing:initial;line-height:normal;text-transform:lowercase;",
+      "toString": [Function],
+    },
+    "nBold": Object {
+      "map": undefined,
+      "name": "qgokl4",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:bold;font-size:20rem;letter-spacing:0.29em;line-height:22em;",
+      "toString": [Function],
+    },
+  },
+  "sFooBar": Object {
+    "nBold": Object {
+      "map": undefined,
+      "name": "jc2bz6",
+      "next": undefined,
+      "styles": "font-family:Helvetica, -apple-system, BlinkMacSystemFont;font-style:normal;font-weight:bold;font-size:FooBar;letter-spacing:0.29em;line-height:22em;",
+      "toString": [Function],
+    },
+  },
+}
+`;
+
+exports[`returns font styles with additional font styles 1`] = `
+Object {
+  "s14": Object {
+    "i400": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "14px",
+      "fontStyle": "italic",
+      "fontWeight": 400,
+      "letterSpacing": "initial",
+      "lineHeight": "18px",
+      "textRendering": "optimizeLegibility",
+    },
+    "n400": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "14px",
+      "fontStyle": "normal",
+      "fontWeight": 400,
+      "letterSpacing": "initial",
+      "lineHeight": "18px",
+      "textRendering": "optimizeLegibility",
+    },
+  },
+  "s20": Object {
+    "n500": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "0.29px",
+      "lineHeight": "22px",
+      "textRendering": "optimizeLegibility",
+    },
+    "n500_caps": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "1px",
+      "lineHeight": "1px",
+      "textRendering": "optimizeLegibility",
+      "textTransform": "uppercase",
+    },
+    "n500_lower": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20px",
+      "fontStyle": "normal",
+      "fontWeight": 500,
+      "letterSpacing": "initial",
+      "lineHeight": "normal",
+      "textRendering": "optimizeLegibility",
+      "textTransform": "lowercase",
+    },
+    "nBold": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "20rem",
+      "fontStyle": "normal",
+      "fontWeight": "bold",
+      "letterSpacing": "0.29em",
+      "lineHeight": "22em",
+      "textRendering": "optimizeLegibility",
+    },
+  },
+  "sFooBar": Object {
+    "nBold": Object {
+      "fontFamily": "Helvetica, -apple-system, BlinkMacSystemFont",
+      "fontSize": "FooBar",
+      "fontStyle": "normal",
+      "fontWeight": "bold",
+      "letterSpacing": "0.29em",
+      "lineHeight": "22em",
+      "textRendering": "optimizeLegibility",
     },
   },
 }

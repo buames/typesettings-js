@@ -20,13 +20,13 @@ module.exports = {
     },
   },
   rules: {
+    // prettier
     'prettier/prettier': 'error',
+
+    // Allow inferrence
     '@typescript-eslint/explicit-function-return-type': 'off',
+    // prefer consistency
     '@typescript-eslint/no-inferrable-types': 'off',
-    '@typescript-eslint/no-empty-interface': [
-      'error',
-      { allowSingleExtends: true },
-    ],
   },
   overrides: [
     {
@@ -41,21 +41,9 @@ module.exports = {
     },
     {
       files: ['*.test.ts', '*.test.tsx'],
-      extends: ['plugin:jest/recommended'],
+      extends: ['plugin:jest/recommended', 'plugin:jest/style'],
       plugins: ['jest'],
-      env: {
-        jest: true,
-        node: true,
-      },
-      rules: {
-        // import
-        'import/no-extraneous-dependencies': 'off',
-
-        // jest
-        'jest/prefer-to-be-null': 'error',
-        'jest/prefer-to-be-undefined': 'error',
-        'jest/prefer-to-have-length': 'error',
-      },
+      env: { jest: true },
     },
   ],
 };

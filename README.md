@@ -3,11 +3,11 @@
 Typesettings is a handful of utilities to help manage typsettings. It can be
 used with emotion, styled-components, or any other CSS-in-JS framework.
 
-[![Build Status](https://travis-ci.com/buames/typesettings-js.svg?branch=master)](https://travis-ci.com/buames/typesettings-js)
-[![codecov](https://codecov.io/gh/buames/typesettings-js/branch/master/graph/badge.svg)](https://codecov.io/gh/buames/typesettings-js)
-[![npm](https://img.shields.io/npm/v/typesettings-js.svg?color="black")](https://www.npmjs.com/package/typesettings-js)
-[![npm](https://img.shields.io/bundlephobia/min/typesettings-js.svg?color="black")](https://bundlephobia.com/result?p=typesettings-js)
-[![npm](https://img.shields.io/bundlephobia/minzip/typesettings-js.svg?color="black")](https://bundlephobia.com/result?p=typesettings-js)
+[![](https://img.shields.io/npm/v/typesettings-js.svg?color=black&logoColor=white)](https://www.npmjs.com/package/typesettings-js)
+![](https://img.shields.io/github/workflow/status/buames/typesettings-js/Test?logo=github&color=black)
+[![](https://img.shields.io/codecov/c/github/buames/typesettings-js?logo=codecov&logoColor=white&color=black)](https://codecov.io/gh/buames/typesettings-js)
+[![](https://img.shields.io/bundlephobia/min/typesettings-js?logo=bundlephobia&color=black)](https://bundlephobia.com/result?p=typesettings-js)
+[![](https://img.shields.io/bundlephobia/minzip/typesettings-js?logo=bundlephobia&color=black)](https://bundlephobia.com/result?p=typesettings-js)
 
 #### Install
 
@@ -25,12 +25,11 @@ yarn add typesettings-js
   - [Additional Font Styles](#additional-font-styles)
   - [Additional Font Face Styles](#additional-font-face-styles)
 - [API](#api)
-  - [generate()](<#generate()>)
-  - [generateFonts()](<#generateFonts()>)
-  - [generateFontFace()](<#generateFontFace()>)
+  - [createFonts()](<#createFonts()>)
+  - [createFontFace()](<#createFontFace()>)
   - [Utilities](#utilities)
     - [getFontStack()](#getFontStack)
-    - [normalizeFamily()](#normalizeFamily)
+    - [normalizeFontFamily()](#normalizeFontFamily)
     - [parseSize()](#parseSize)
 - [Typescript](#typescript)
 
@@ -41,25 +40,25 @@ yarn add typesettings-js
 The first you'll want to do is create your typesettings object. This will be
 used to create your styled (font) objects as well as a `@font-face` declaration.
 
-```js
+```ts
 const Typesettings = {
-  family: String,
-  fallbacks: Array<String>,
+  family: string,
+  fallbacks: Array<string>,
   variants: Array<{
     fontStyle: 'italic' | 'normal' | 'oblique' | string,
-    fontWeight: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 'bold' | 'bolder' | 'normal' | 'lighter',
+    fontWeight: number | 'bold' | 'bolder' | 'normal' | 'lighter',
     sources: {
-      locals: Array<String>,
-      eot: String,
-      woff: String,
-      woff2: String,
-      ttf: String
+      locals?: Array<string>,
+      eot?: string,
+      woff?: string,
+      woff2?: string,
+      ttf?: string
     },
     ['normalcase' | 'uppercase' | 'lowercase']: [
       {
-        fontSize: String | Number,
-        letterSpacing: String | Number | null,
-        lineHeight: String | Number | null
+        fontSize: string | number,
+        letterSpacing?: string | number,
+        lineHeight?: string | number
       }
       ...
     ]
@@ -199,58 +198,13 @@ const options = {
 
 ## API
 
-### generate()
+### createFonts()
 
-```js
-generate: (typesettings: Object, options?: Object) => {
-  fontFace: String,
-  fonts: Object
-}
+```ts
+createFonts: (typesettings: object, options?: object) => object;
 ```
 
-Generate a fontFace declaration and an object of styled objects from your
-typesettings. You can pass in objects of additional
-[`fontFaceStyles`](#additional-font-face-styles) and
-[`fontStyles`](#additional-font-styles) that will be added to these.
-
-```js
-import styled from '@emotion/styled';
-import { Global, css } from '@emotion/core';
-import { generate } from 'typesettings-js';
-import Typesettings from 'your_typesettings';
-
-const options = {
-  cssFn: css,
-  fontFaceStyles: {
-    fontDisplay: 'swap',
-  },
-  fontStyles: {
-    textRendering: 'optimizeLegibility',
-    WebkitFontSmoothing: 'antialiased',
-  },
-};
-
-const { fontFace, fonts } = generate(Typesettings, options);
-
-const TextLabel = styled('p')`
-  ${fonts.s16.n400};
-`;
-
-render(
-  <div>
-    <Global styles={fontFace} />
-    <TextLabel>The quick brown fox jumps over the lazy dog.</TextLabel>
-  </div>,
-);
-```
-
-### generateFonts()
-
-```js
-generateFonts: (typesettings: Object, options?: Object) => Object;
-```
-
-Generate styled objects to be used with CSS-in-JS frameworks from your
+Create styled font objects to be used with CSS-in-JS frameworks from your
 typesettings. You can pass in an object of additional
 [`fontStyles`](#additional-font-styles) that will be added to these.
 
@@ -258,7 +212,7 @@ typesettings. You can pass in an object of additional
 
 ```js
 import styled from '@emotion/styled';
-import { generateFonts } from 'typesettings-js';
+import { createFonts } from 'typesettings-js';
 import Typesettings from 'your_typesettings';
 
 const options = {
@@ -268,7 +222,7 @@ const options = {
   },
 };
 
-const fonts = generateFonts(Typesettings, options);
+const fonts = createFonts(Typesettings, options);
 
 /*
   Outputs an object of styled objects:
@@ -301,7 +255,7 @@ the options.
 ```js
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import { generateFonts } from 'typesettings-js';
+import { createFonts } from 'typesettings-js';
 import Typesettings from 'your_typesettings';
 
 const options = {
@@ -312,7 +266,7 @@ const options = {
   },
 };
 
-const fonts = generateFonts(Typesettings, options);
+const fonts = createFonts(Typesettings, options);
 
 /*
   Outputs an object  of classnames:
@@ -339,10 +293,10 @@ render(
 );
 ```
 
-### generateFontFace()
+### createFontFace()
 
 ```js
-generateFontFace: (typesettings: Object, options?: Object) => Object;
+createFontFace: (typesettings: object, options?: object) => object;
 ```
 
 Generates a @font-face css declariation from typesettings. You can pass in an
@@ -353,7 +307,7 @@ be added to these.
 
 ```js
 import { Global, css } from '@emotion/core';
-import { generateFontFace } from 'typesettings-js';
+import { createFontFace } from 'typesettings-js';
 import Typesettings from 'path/to/your_typesettings';
 
 const options = {
@@ -363,7 +317,7 @@ const options = {
   },
 };
 
-const fontFace = generateFontFace(Typesettings, options);
+const fontFace = createFontFace(Typesettings, options);
 
 render(
   <div>
@@ -379,34 +333,31 @@ render(
 Normalizes the family name and all fallbacks, combining them both into a single
 font stack.
 
-```js
-getFontStack: (family: String, fallbacks?: String[]) => String;
+```ts
+getFontStack: (family: string, fallbacks?: string[]) => string;
 ```
 
-### normalizeFamily()
+### normalizeFontFamily()
 
 Returns a normalized FontFamily name where names with a space are automatically
 wrapped in quotes.
 
-```js
-normalizeFamily: (family: String) => String;
+```ts
+normalizeFontFamily: (family: string) => string;
 ```
 
 ### parseSize()
 
 Parses a number and unit string, returning only the number used
 
-```js
-parseSize: (str: String) => String;
+```ts
+parseSize: (str: string) => string;
 ```
 
 ## Typescript
 
 Typescript types and interfaces are exported. You can import them as named
-imports. See all the type definitions in the [src/types.ts](./src/types.ts)
-file.
-
-TypeScript checks css properties with the object style syntax using
+imports. TypeScript checks css properties with the object style syntax using
 [`csstype`](https://www.npmjs.com/package/csstype) package.
 
 Example typing and extending typesetting `options`.
@@ -414,35 +365,23 @@ Example typing and extending typesetting `options`.
 ```jsx
 // foo.ts
 import { Interpolation, SerializedStyles } from '@emotion/core';
-import {
-  generate,
-  FontStyleOptions,
-  FontFaceStyleOptions,
-  Typesettings,
-} from 'typesettings-js';
-
-type StyledCssFn = (...args: Interpolation[]) => SerializedStyles;
-
-interface CustomFontStyles extends FontStyleOptions { }
-
-interface CustomFontFaceStyles extends FontFaceStyleOptions {
-  WebkitFontSmoothing?: 'antialiased', 'subpixel-antialiased', 'inherit', 'initial', 'none';
-}
+import { createFonts,  Typesettings, TypesettingOptions } from 'typesettings-js';
 
 const typesettings: Typesettings = {
   // your typesettings
 }
 
-// Type the `cssFn` and the ResultType(s) of `fonts` and `fontFace`
-generate<StyledCssFn>(typesettings, {
+const options: TypesettingOptions = {
   cssFn: css,
-  fontStyles: <CustomFontStyles>{
-                                ^ Argument of type 'WebkitFontSmoothing: 'antialiased';' is not assignable [...]
+  fontStyles: {
+    WebkitFontSmoothing: 'antialiaseddddd', // Mispelling error
+                       ^ Argument of type 'WebkitFontSmoothing: 'antialiaseddddd';' is not assignable [...]
+  },
+  fontFaceStyles: {
     WebkitFontSmoothing: 'antialiased' // WebkitFontSmoothing is not a valid csstype property
+                       ^ Argument of type 'WebkitFontSmoothing: 'antialiased';' is not assignable [...]
   },
-  fontFaceStyles: <CustomFontFaceStyles>{
-                                        ^ Argument of type 'WebkitFontSmoothing: 'antialiaseddddd';' is not assignable [...]
-    WebkitFontSmoothing: 'antialiaseddddd' // Mispelling error
-  },
-})
+}
+
+createFonts(typesettings, options)
 ```

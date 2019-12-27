@@ -1,6 +1,14 @@
-import { Typesettings, TypesettingOptions, generate } from '../../src';
+/* eslint-disable import/no-unresolved */
+/* eslint-disable global-require */
+import {
+  Typesettings,
+  TypesettingOptions,
+  Fonts,
+  createFonts,
+  createFontFace,
+} from '../../src';
 
-export interface Options<T> extends TypesettingOptions<T> {
+export interface Options extends TypesettingOptions {
   eot?: boolean;
   woff?: boolean;
   woff2?: boolean;
@@ -18,7 +26,7 @@ export const defaults = {
   fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
 };
 
-export const create = <T>(opts?: Options<T>) => {
+export const build = (opts?: Options): Typesettings => {
   const options = { ...defaults, ...opts };
 
   const config: Typesettings = {
@@ -58,10 +66,10 @@ export const create = <T>(opts?: Options<T>) => {
         fontWeight: 500,
         sources: {
           locals: ['Helvetica Medium', 'Helvetica-Medium'],
-          eot: options.eot && './font-file.eot',
-          woff: options.woff && './font-file.woff',
-          woff2: options.woff2 && './font-file.woff2',
-          ttf: options.ttf && './font-file.ttf',
+          eot: options.eot && require('./font-file.eot'),
+          woff: options.woff && require('./font-file.woff'),
+          woff2: options.woff2 && require('./font-file.woff2'),
+          ttf: options.ttf && require('./font-file.ttf'),
         },
         normalcase: [
           {
@@ -114,8 +122,16 @@ export const create = <T>(opts?: Options<T>) => {
   return config;
 };
 
-export const Helvetica = <T>(opts?: Options<T>) => {
+export const Helvetica = (
+  opts?: Options,
+): {
+  fontFace: string;
+  fonts: Fonts;
+} => {
   const options = { ...defaults, ...opts };
-  const config = create(options);
-  return generate<T>(config, options);
+  const config = build(options);
+  return {
+    fontFace: createFontFace(config, options),
+    fonts: createFonts(config, options),
+  };
 };
