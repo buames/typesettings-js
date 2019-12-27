@@ -2,14 +2,18 @@ import {
   fontCasings,
   FontSetting,
   FontVariant,
-  StyledCssFn,
   StyledObject,
   Typesettings,
-  TypesettingsFontsResult,
   TypesettingOptions,
 } from './types';
 import { getFontStack } from './fontFamilies';
 import { parseSize, px } from './units';
+
+export type Fonts = {
+  [size: string]: {
+    [weight: string]: StyledObject;
+  };
+};
 
 /**
  * Returns a weight property label‚ prefixed with 'n' for normal, 'i' for italics,
@@ -27,10 +31,10 @@ const getStyleLabel = ({ fontStyle, fontWeight }: FontVariant) =>
 /**
  * Create fonts from a typesettings object
  * */
-export const createFonts = <T>(
+export const createFonts = (
   typesettings: Typesettings,
-  options: TypesettingOptions<T> = {},
-): TypesettingsFontsResult<T> => {
+  options: TypesettingOptions = {},
+): Fonts => {
   const { family, fallbacks, variants } = typesettings;
   const fontFamily = getFontStack(family, fallbacks);
 
@@ -75,7 +79,7 @@ export const createFonts = <T>(
     });
 
     return acc;
-  }, {} as TypesettingsFontsResult<StyledObject | StyledCssFn>);
+  }, {} as Fonts);
 
-  return (styles as unknown) as TypesettingsFontsResult<T>;
+  return styles;
 };

@@ -7,6 +7,7 @@ import {
   LineHeightProperty,
   LetterSpacingProperty,
   Properties,
+  Globals,
 } from 'csstype';
 
 export const fontCasings = {
@@ -24,13 +25,18 @@ export const fontSources = {
   eot: 'embedded-opentype',
 } as const;
 
-type ValueOf<
-  T extends Record<string | number | symbol, unknown>
-> = T extends object ? keyof T : never;
-
-export type StyledCssFn = (...styles: unknown[]) => unknown;
+export type StyledCssFn = <T, R>(...styles: T[]) => R;
 
 export type StyledValue = string | number | undefined | null;
+
+type LocalsFontSource = Record<'locals', string | string[]>;
+
+type FormattedFontSource = Record<
+  Exclude<keyof typeof fontSources, 'locals'>,
+  string | NodeJS.Require
+>;
+
+export type FontSources = Partial<LocalsFontSource & FormattedFontSource>;
 
 export interface StyledObject {
   [k: string]: StyledValue;
@@ -51,43 +57,27 @@ export interface FontVariant {
   lowercase?: FontSetting[];
 }
 
-export type FontSources = {
-  [K in ValueOf<typeof fontSources>]?:
-    | string
-    | string[]
-    | NodeJS.Require
-    | false;
-};
-
 export interface FontSetting extends StyledObject {
   fontSize: FontSizeProperty<StyledValue>;
   letterSpacing?: LetterSpacingProperty<StyledValue>;
   lineHeight?: LineHeightProperty<StyledValue>;
 }
 
-export interface TypesettingOptions<T = StyledCssFn> {
+export interface TypesettingOptions {
   [k: string]: unknown;
-  cssFn?: T;
+  cssFn?: StyledCssFn;
   fontStyles?: FontStyleOptions;
   fontFaceStyles?: FontFaceOptions;
 }
 
 export interface FontStyleOptions extends Properties<StyledValue> {
   WebkitFontSmoothing?:
+    | Globals
     | 'auto'
     | 'antialiased'
     | 'subpixel-antialiased'
-    | 'none'
-    | 'unset'
-    | 'initial'
-    | 'inherit';
+    | 'none';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface FontFaceOptions extends FontFace {}
-
-export type TypesettingsFontsResult<T> = {
-  [size: string]: {
-    [weight: string]: T extends StyledCssFn ? ReturnType<T> : StyledObject;
-  };
-};

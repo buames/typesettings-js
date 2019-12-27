@@ -4,9 +4,9 @@ import { normalizeFontFamily } from './fontFamilies';
 /**
  * Create a @font-face declaration from a typesettings object
  * */
-export const createFontFace = <T>(
+export const createFontFace = (
   typesettings: Typesettings,
-  options: TypesettingOptions<T> = {},
+  options: TypesettingOptions = {},
 ): string => {
   const { family, variants } = typesettings;
 

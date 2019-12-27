@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
-import { css, Interpolation, SerializedStyles } from '@emotion/core';
+import { css } from '@emotion/core';
 import { build } from './fixtures/a';
 import { createFonts } from '../src';
 
-type StyledCssFn = (...args: Interpolation[]) => SerializedStyles;
-
 it('returns font styles as an object', () => {
-  const a = createFonts(build());
+  const a = createFonts(build(), {});
   expect(typeof a === 'object').toBe(true);
 });
 
@@ -100,15 +98,15 @@ it('returns text-transform as uppercase', () => {
 });
 
 it('returns text-transform as lowercase', () => {
-  const a = createFonts(build());
-  expect(a.s20.n500_lower.textTransform).toBe('lowercase');
+  const fonts = createFonts(build());
+  expect(fonts.s20.n500_lower.textTransform).toBe('lowercase');
 });
 
 it('returns font style as the return type of a cssFn', () => {
-  const a = createFonts<StyledCssFn>(build({ fallbacks: undefined }), {
+  const fonts = createFonts(build({ fallbacks: undefined }), {
     cssFn: css,
   });
-  expect(a.s14.i400.styles).toBe(
+  expect(fonts.s14.i400.styles).toBe(
     'font-family:Helvetica;font-style:italic;font-weight:400;font-size:14px;letter-spacing:initial;line-height:18px;',
   );
 });

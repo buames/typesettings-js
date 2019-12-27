@@ -1,4 +1,3 @@
-export * from './create';
 export * from './fontFace';
 export * from './fontFamilies';
 export * from './fonts';
