@@ -72,8 +72,16 @@ export interface TypesettingOptions<T = StyledCssFn> {
   fontFaceStyles?: FontFaceOptions;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface FontStyleOptions extends Properties<StyledValue> {}
+export interface FontStyleOptions extends Properties<StyledValue> {
+  WebkitFontSmoothing?:
+    | 'auto'
+    | 'antialiased'
+    | 'subpixel-antialiased'
+    | 'none'
+    | 'unset'
+    | 'initial'
+    | 'inherit';
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface FontFaceOptions extends FontFace {}
@@ -83,7 +91,3 @@ export type TypesettingsFontsResult<T> = {
     [weight: string]: T extends StyledCssFn ? ReturnType<T> : StyledObject;
   };
 };
-
-export type TypesettingsFontFaceResult<T> = T extends StyledCssFn
-  ? ReturnType<T>
-  : string;

@@ -1,9 +1,4 @@
-import {
-  fontSources,
-  Typesettings,
-  TypesettingOptions,
-  TypesettingsFontsResult,
-} from './types';
+import { fontSources, Typesettings, TypesettingOptions } from './types';
 import { normalizeFontFamily } from './fontFamilies';
 
 /**
@@ -12,7 +7,7 @@ import { normalizeFontFamily } from './fontFamilies';
 export const createFontFace = <T>(
   typesettings: Typesettings,
   options: TypesettingOptions<T> = {},
-): TypesettingsFontsResult<T> => {
+): string => {
   const { family, variants } = typesettings;
 
   const declaration = variants.map(({ sources, fontStyle, fontWeight }) => {
@@ -61,8 +56,5 @@ export const createFontFace = <T>(
   });
 
   const fontFace = declaration.join(' ');
-
-  return typeof options.cssFn === 'function'
-    ? options.cssFn(fontFace)
-    : fontFace;
+  return fontFace;
 };
