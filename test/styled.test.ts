@@ -1,26 +1,26 @@
 import styled from '@emotion/styled';
 import { css, Interpolation, SerializedStyles } from '@emotion/core';
-import { create } from './fixtures/a';
-import { generateFonts, generateFontFace } from '../src';
+import { build } from './fixtures/a';
+import { createFontFace, createFonts } from '../src';
 
 type StyledCssFn = (...args: Interpolation[]) => SerializedStyles;
 
 test('Should return @font-face declaration as the return type of a cssFn', () => {
-  const a = generateFontFace<StyledCssFn>(create(), { cssFn: css });
-  const b = generateFontFace(create());
+  const a = createFontFace<StyledCssFn>(build(), { cssFn: css });
+  const b = createFontFace(build());
   expect(a.styles).toEqual(b);
 });
 
 test('Should return @font-face declaration snapshots', () => {
-  const a = generateFontFace(create());
+  const a = createFontFace(build());
   expect(a).toMatchSnapshot('@font-face declaration when cssFn is undefined');
 
-  const b = generateFontFace<StyledCssFn>(create(), { cssFn: css });
+  const b = createFontFace<StyledCssFn>(build(), { cssFn: css });
   expect(b).toMatchSnapshot('@font-face declaration when cssFn is set');
 });
 
 test('Should return font style as the return type of a cssFn', () => {
-  const a = generateFonts<StyledCssFn>(create({ fallbacks: undefined }), {
+  const a = createFonts<StyledCssFn>(build({ fallbacks: undefined }), {
     cssFn: css,
   });
   expect(a.s14.i400.styles).toBe(
@@ -29,7 +29,7 @@ test('Should return font style as the return type of a cssFn', () => {
 });
 
 test('Should return font style snapshots', () => {
-  const a = generateFonts(create());
+  const a = createFonts(build());
   expect(a).toMatchSnapshot(
     'Font styles default return type when cssFn is undefined',
   );
@@ -56,7 +56,7 @@ test('Should return font style snapshots', () => {
     '`styled` ArrayInterpolation font styles when cssFn is undefined',
   );
 
-  const b = generateFonts<StyledCssFn>(create(), { cssFn: css });
+  const b = createFonts<StyledCssFn>(build(), { cssFn: css });
   expect(b).toMatchSnapshot(
     'Font styles default return type when cssFn is set',
   );

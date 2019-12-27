@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable global-require */
-import { Typesettings, TypesettingOptions, generate } from '../../src';
+import { Typesettings, TypesettingOptions, create } from '../../src';
 
 export interface Options<T> extends TypesettingOptions<T> {
   eot?: boolean;
@@ -20,7 +20,7 @@ export const defaults = {
   fallbacks: ['-apple-system', 'BlinkMacSystemFont'],
 };
 
-export const create = <T>(opts?: Options<T>) => {
+export const build = <T>(opts?: Options<T>) => {
   const options = { ...defaults, ...opts };
 
   const config: Typesettings = {
@@ -118,6 +118,6 @@ export const create = <T>(opts?: Options<T>) => {
 
 export const Helvetica = <T>(opts?: Options<T>) => {
   const options = { ...defaults, ...opts };
-  const config = create(options);
-  return generate<T>(config, options);
+  const config = build(options);
+  return create<T>(config, options);
 };

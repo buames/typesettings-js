@@ -10,9 +10,9 @@ import {
 } from 'csstype';
 
 export const fontCasings = {
-  normalcase: 'normalcase',
-  uppercase: 'uppercase',
-  lowercase: 'lowercase',
+  normalcase: '',
+  uppercase: '_caps',
+  lowercase: '_lower',
 } as const;
 
 export const fontSources = {
@@ -52,7 +52,11 @@ export interface FontVariant {
 }
 
 export type FontSources = {
-  [K in ValueOf<typeof fontSources>]?: string | string[] | NodeRequire | false;
+  [K in ValueOf<typeof fontSources>]?:
+    | string
+    | string[]
+    | NodeJS.Require
+    | false;
 };
 
 export interface FontSetting extends StyledObject {
