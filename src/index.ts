@@ -64,10 +64,7 @@ export const getFontStack = (
   family: FontFamilyProperty,
   fallbacks?: FontFamilyProperty[],
 ) =>
-  [
-    normalizeFamily(family),
-    fallbacks && fallbacks.map(normalizeFamily).join(', '),
-  ]
+  [normalizeFamily(family), fallbacks?.map(normalizeFamily).join(', ')]
     .filter(Boolean)
     .join(', ');
 
@@ -163,13 +160,19 @@ export const generateFontFace = <T>(
   const declaration = variants.map(({ sources, fontStyle, fontWeight }) => {
     const srcs = (Object.keys(sources) as (keyof typeof sources)[])
       .map((key) => {
-        const src = sources[key];
+        let src = sources[key];
         const format = fontSources[key];
 
-        if (!src) return;
+        if (src === null || src === undefined) return;
 
+        // Src is a local source
         if (Array.isArray(src) && key === 'locals') {
           return src.map((n: string) => `local('${n}')`);
+        }
+
+        // Src is a require()
+        if (!Array.isArray(src) && typeof src === 'object') {
+          src = ((src as unknown) as { default: string })?.default || src;
         }
 
         if (key === 'eot') {

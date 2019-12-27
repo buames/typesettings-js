@@ -50,7 +50,7 @@ it('returns font styles as snapshots', () => {
   const c = generateFonts(create(), {
     fontStyles: { textRendering: 'optimizeLegibility' },
   });
-  expect(b).toMatchSnapshot('Font styles with additional font styles');
+  expect(c).toMatchSnapshot('Font styles with additional font styles');
 });
 
 it('returns font-family without quotes', () => {

@@ -1,11 +1,11 @@
 import {
+  FontFace,
   FontFamilyProperty,
   FontSizeProperty,
   FontStyleProperty,
   FontWeightProperty,
   LineHeightProperty,
   LetterSpacingProperty,
-  FontFace,
   Properties,
 } from 'csstype';
 
@@ -52,11 +52,7 @@ export interface FontVariant {
 }
 
 export type FontSources = {
-  [K in ValueOf<typeof fontSources>]?:
-    | string
-    | string[]
-    | NodeRequireFunction
-    | false;
+  [K in ValueOf<typeof fontSources>]?: string | string[] | NodeRequire | false;
 };
 
 export interface FontSetting extends StyledObject {
@@ -72,8 +68,10 @@ export interface TypesettingOptions<T = StyledCssFn> {
   fontFaceStyles?: FontFaceOptions;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface FontStyleOptions extends Properties<StyledValue> {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface FontFaceOptions extends FontFace {}
 
 export type TypesettingsFontsResult<T> = {

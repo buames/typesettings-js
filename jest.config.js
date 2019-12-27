@@ -8,4 +8,8 @@ module.exports = {
       lines: 90,
     },
   },
+  moduleNameMapper: {
+    '^.+\\.(ttf|eot|woff|woff2)$': '<rootDir>/test/lib/mock-file.ts',
+  },
+  snapshotSerializers: ['jest-emotion'],
 };

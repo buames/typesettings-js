@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable global-require */
 import { Typesettings, TypesettingOptions, generate } from '../../src';
 
 export interface Options<T> extends TypesettingOptions<T> {
@@ -58,10 +60,10 @@ export const create = <T>(opts?: Options<T>) => {
         fontWeight: 500,
         sources: {
           locals: ['Helvetica Medium', 'Helvetica-Medium'],
-          eot: options.eot && './font-file.eot',
-          woff: options.woff && './font-file.woff',
-          woff2: options.woff2 && './font-file.woff2',
-          ttf: options.ttf && './font-file.ttf',
+          eot: options.eot && require('./font-file.eot'),
+          woff: options.woff && require('./font-file.woff'),
+          woff2: options.woff2 && require('./font-file.woff2'),
+          ttf: options.ttf && require('./font-file.ttf'),
         },
         normalcase: [
           {
