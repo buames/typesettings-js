@@ -10,6 +10,7 @@ module.exports = (api) => {
         loose: true,
         modules: isEsm ? false : 'commonjs',
         targets: isEsm ? { esmodules: true } : { node: 'current' },
+        shippedProposals: true,
       },
     ],
     '@babel/preset-typescript',
